@@ -11,9 +11,10 @@ import {
   getZoneAt,
   zoneDemandMultiplier,
 } from '../services/hot-zones';
-import { isNightTime, nightlifeBoostFor, themeFor } from '../services/night-mode';
+import { isNightTime, themeFor } from '../services/night-mode';
 import ZoneIndicator from '../components/ZoneIndicator';
 import { useUserLocation, resolveLocation } from '../hooks/useUserLocation';
+import { computeAssistantMatching } from '../services/assistant-matching';
 
 export default function MarketplaceScreen(): JSX.Element {
   const theme = themeFor();
@@ -26,16 +27,19 @@ export default function MarketplaceScreen(): JSX.Element {
     fetchUpcomingEvents().then(setEvents);
   }, []);
 
-  const eventBoost = useMemo(() => {
-    if (!eventBoostEnabled) return { score: 0, contributors: [], active: false };
-    return computeEventBoost(loc.lat, loc.lng, events);
+  const matching = useMemo(() => {
+    return computeAssistantMatching({
+      userLat: loc.lat,
+      userLng: loc.lng,
+      events: eventBoostEnabled ? events : [],
+    });
   }, [events, eventBoostEnabled, loc.lat, loc.lng]);
 
   const zone = getZoneAt(loc.lat, loc.lng);
-  const zoneSurge = zoneDemandMultiplier(loc.lat, loc.lng);
-  const nightSurge = nightlifeBoostFor();
-  // Combined effective surge that the matching engine would apply.
-  const combinedSurge = zoneSurge * (1 + 0.5 * eventBoost.score) * nightSurge;
+  const eventBoost = matching.components.eventBoost;
+  const zoneSurge = matching.components.zone;
+  const nightSurge = matching.components.night;
+  const combinedSurge = matching.effectiveSurge;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
@@ -57,7 +61,7 @@ export default function MarketplaceScreen(): JSX.Element {
         </View>
 
         <Text style={[styles.note, { color: theme.textMuted }]}>
-          Zone {zoneSurge.toFixed(2)}× · event boost {(1 + 0.5 * eventBoost.score).toFixed(2)}× · night {nightSurge.toFixed(2)}×{isNightTime() ? ' (active)' : ''}
+          Zone {zoneSurge.toFixed(2)}× · event boost {matching.components.eventFactor.toFixed(2)}× · night {nightSurge.toFixed(2)}×{isNightTime() ? ' (active)' : ''}{matching.capped ? ' · capped' : ''}
         </Text>
 
         {eventBoost.contributors.length > 0 && (
