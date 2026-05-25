@@ -7,16 +7,17 @@ import { TierBadge } from '../../components/TierBadge';
 import ZoneIndicator from '../../components/ZoneIndicator';
 import { getZoneAt, zoneDemandMultiplier } from '../../services/hot-zones';
 import { isNightTime, themeFor } from '../../services/night-mode';
+import { useUserLocation, resolveLocation } from '../../hooks/useUserLocation';
 
 export default function HomeScreen(): JSX.Element {
   const theme = themeFor();
   // Placeholder demo data. Real data wires in via SDK once auth lands.
   const balanceUsdc = 0;
   const tier: 'Bronze' | 'Silver' | 'Gold' | 'Platinum' | null = null;
-  // Demo: pretend the user is on the Strip near Bellagio until geolocation lands.
-  const demoLoc = { lat: 36.1147, lng: -115.1728 };
-  const zone = getZoneAt(demoLoc.lat, demoLoc.lng);
-  const surge = zoneDemandMultiplier(demoLoc.lat, demoLoc.lng);
+  const { location } = useUserLocation();
+  const loc = resolveLocation(location);
+  const zone = getZoneAt(loc.lat, loc.lng);
+  const surge = zoneDemandMultiplier(loc.lat, loc.lng);
   const night = isNightTime();
 
   return (
