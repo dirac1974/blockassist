@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-05-25 — CAP-001
+
+**Commit SHA**: 8fc8f2a57a3ad0bbc3fb9ff9d4018fba4500c408
+**Date**: 2026-05-25
+**Agent**: Claude (Tokenomics-support; Mobile Lead applies)
+**Task ID**: CAP-001
+**Changes Made**:
+- `mobile/services/assistant-matching.ts`: `COMPOUND_SURGE_CAP` 3.5 → **2.8** per PM 12:57 IST. Inline doc explains the raw worst-case (≈3.36× at Allegiant on game night) and rationale for the 2.8× ceiling. `DEFAULT_EVENT_BOOST_WEIGHT` 0.5 also documented (avoids double-capping the LV-001 stack).
+- `mobile/services/__tests__/assistant-matching.test.ts`: pin `COMPOUND_SURGE_CAP === 2.8` (regression). New case documents the raw-vs-effective relationship around the cap.
+- `mobile/services/__tests__/surge-integration.test.ts`: comment clarifies this asserts the raw product; cap testing lives in `assistant-matching.test.ts`.
+- `docs/las-vegas-technical-specs.md`: cross-cutting surge section rewritten with the cap value + reasoning. New "Category weight rationale" block explains festival 1.0 → conference 0.5. Open-questions list trimmed: 4 items resolved this session.
+**Test Results**: Logic-only change; tests authored.
+**Deployment Status Update**: None. Branch `feature/CAP-001-surge-cap`.
+**Issues / Blockers**: None.
+**Grok Feedback / Questions**: None — directly implements PM directive.
+
+---
+
 ## 2026-05-25 — PKG-001
 
 **Commit SHA**: f94efea5556e020abe56e1d033658c97130d1727
