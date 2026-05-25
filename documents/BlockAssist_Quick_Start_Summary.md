@@ -1,21 +1,7 @@
 # BlockAssist v2.1 - Quick Start Summary (Updated)
 
-**What is it?**
-Decentralized delivery + task platform with only ~6% fees.
+**Assistant Pay**: Delivery fee + tip only (~94% take-home) + staking yield.
 
-**Key Benefits**:
-- Assistants keep ~94% (vs 70-80% on Uber/DoorDash)
-- Users can earn by staking and promoting the platform
-- Fair decentralized disputes with public transparency
+**Restaurant Payment**: User pays restaurant directly.
 
-**Tokenomics**:
-- Variable yield from real platform revenue
-- 20% Growth Treasury for marketing + investors
-- Buyback & burn for price stability
-
-**How to Earn**:
-- Stake $ASSIST → Revenue share + governance
-- Use the app → Usage airdrops
-- Promote → Advertising rewards from Growth Treasury
-
-See full spec for complete details.
+See full spec for complete model.
