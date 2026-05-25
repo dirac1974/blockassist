@@ -1,0 +1,59 @@
+name: CI - SDK
+
+on:
+  push:
+    paths:
+      - 'sdk/**'
+      - '.github/workflows/ci-sdk.yml'
+  pull_request:
+    paths:
+      - 'sdk/**'
+      - '.github/workflows/ci-sdk.yml'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for lockfile
+        id: lockfile
+        run: |
+          if [ -f sdk/package-lock.json ] || [ -f sdk/yarn.lock ] || [ -f sdk/pnpm-lock.yaml ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::sdk/ has no lockfile yet; skipping install/build/test."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.lockfile.outputs.exists == 'true'
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: sdk/package-lock.json
+
+      - name: Install
+        if: steps.lockfile.outputs.exists == 'true'
+        working-directory: sdk
+        run: npm ci
+
+      - name: Lint
+        if: steps.lockfile.outputs.exists == 'true'
+        working-directory: sdk
+        run: npm run lint --if-present
+
+      - name: Typecheck
+        if: steps.lockfile.outputs.exists == 'true'
+        working-directory: sdk
+        run: npm run typecheck --if-present
+
+      - name: Build
+        if: steps.lockfile.outputs.exists == 'true'
+        working-directory: sdk
+        run: npm run build --if-present
+
+      - name: Test
+        if: steps.lockfile.outputs.exists == 'true'
+        working-directory: sdk
+        run: npm test --if-present -- --ci
