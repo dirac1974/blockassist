@@ -1,34 +1,21 @@
-# BlockAssist v2.1 - Quick Start Summary (1 Page)
+# BlockAssist v2.1 - Quick Start Summary (Updated)
 
-**What is BlockAssist?**
-Decentralized gig platform (delivery + tasks) on Solana with ~6% fees vs Uber's 25-30%.
+**What is it?**
+Decentralized delivery + task platform with only ~6% fees.
 
-**Key Features**:
-- Cross-platform (Android + iOS)
-- USDC escrow + assistant collateral
-- Decentralized dispute system (no central control)
-- $ASSIST token for staking, governance & yield
+**Key Benefits**:
+- Assistants keep ~94% (vs 70-80% on Uber/DoorDash)
+- Users can earn by staking and promoting the platform
+- Fair decentralized disputes with public transparency
 
-**Tokenomics (Simplified)**:
-- Yield: Variable (based on real platform revenue)
-- 20% Growth Treasury (vested)
+**Tokenomics**:
+- Variable yield from real platform revenue
+- 20% Growth Treasury for marketing + investors
 - Buyback & burn for price stability
-- Users earn by staking + using the platform
 
-**Dispute System**:
-- 48h optimistic window
-- Fair jury (85th percentile reputation + quadratic voting)
-- Public "Open Courtroom" view + outcome voting
-- Strong anti-scam protections + bans
+**How to Earn**:
+- Stake $ASSIST → Revenue share + governance
+- Use the app → Usage airdrops
+- Promote → Advertising rewards from Growth Treasury
 
-**Current Status**:
-- Las Vegas pilot in development
-- 25+ PRs merged
-- Full specs complete
-
-**How to Participate**:
-- Stake $ASSIST → Earn yield + governance rights
-- Use the app → Earn usage airdrops
-- Promote platform → Earn advertising rewards from Growth Treasury
-
-**Long-term Vision**: Users become platform owners with real ownership and sustainable returns.
+See full spec for complete details.
