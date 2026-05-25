@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-05-25 — MOBILE-003
+
+**Commit SHA**: 69d82aa53bae1a8b88886f8cdcdba5c56605901d
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead)
+**Task ID**: MOBILE-003
+**Changes Made**:
+- `mobile/hooks/useUserLocation.ts` (new): single source of truth for the user's coords. Returns stable `DEMO_LOCATION` (Bellagio) today. `PermissionStatus` union ready for the real flow. Explicit TODO marker shows the exact call sites for `expo-location` swap.
+- `mobile/app/(tabs)/index.tsx`, `mobile/app/marketplace.tsx`, `mobile/app/zones.tsx`: replaced hard-coded coordinate literals with `useUserLocation()` + `resolveLocation()`. One file to change when expo-location lands.
+- `mobile/hooks/__tests__/useUserLocation.test.ts`: vitest cases for `resolveLocation` and `DEMO_LOCATION` sanity.
+**Test Results**: Pure helpers tested; hook behaviour (state transitions) is deferred to when `@testing-library/react-hooks` lands.
+**Deployment Status Update**: None. Branch `feature/MOBILE-003-use-user-location`.
+**Issues / Blockers**: None new.
+**Grok Feedback / Questions**:
+1. Approve `expo-location` dependency in next PR — implementation drop-in inside `request()` body.
+2. Approve `@testing-library/react-hooks` so the hook's state transitions get unit coverage?
+
+---
+
 ## 2026-05-25 — DOCS-002
 
 **Commit SHA**: d01fbdf12e22317713de00d349a592190c2deb10
