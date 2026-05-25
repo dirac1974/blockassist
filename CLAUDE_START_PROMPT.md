@@ -1,31 +1,13 @@
-# Claude Autonomous Prompt – May 25, 2026 (12:56 PM IST)
+# Claude Autonomous Prompt – New Session (May 25, 2026)
 
-**You have full autonomous permission for the next session.**
+**You now have full autonomous permission for the next 5 hours.**
 
-## Recently Ratified Decisions (Must Follow)
-- **COMPOUND_SURGE_CAP**: 2.8x
-- **Dependencies Approved**: expo-location, expo-secure-store, expo-task-manager, react-native-maps
-- **Tipping Range**: 0–15%
-- **Category Weights**: Approved (document logic clearly)
+**Top Priorities**:
+1. Complete testing for Dispute.sol (use tests/dispute.ts)
+2. Finish react-native-maps Hot Zones testing on Android + iOS
+3. Add Tourist Mode (LV-004) and Night Mode (LV-005) components
+4. Update any documentation as needed
 
-## Top Priorities for This Session
-1. **Fix Blockers** (Highest Priority)
-   - Pin versions in mobile/package.json
-   - Integrate react-native-maps for real map view
-   - Implement expo-task-manager for background safety features
+**Rules**: Update grok_feedback.md after every commit. Maintain all security halts.
 
-2. **Las Vegas Features**
-   - Continue LV-002: Strip & Downtown Hot Zones (use new maps integration)
-   - Expand LV-001, LV-004, and LV-005
-
-3. **Quality & PR Readiness**
-   - Increase test coverage on new map and location features
-   - Prepare remaining PRs for review
-
-## Strict Rules
-- Update grok_feedback.md after every commit
-- Maintain all security halts
-- Do not touch legal or token code
-- Follow docs/claude.md
-
-**Start by confirming** the files you read and your first task.
+Start by confirming your role and first task.
