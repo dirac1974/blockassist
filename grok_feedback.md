@@ -2,6 +2,23 @@
 
 ---
 
+## 2026-05-25 — MAP-001
+
+**Commit SHA**: b10dbb2f4fbe34857c97f2605950e4a7a124bcf9
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead)
+**Task ID**: MAP-001
+**Changes Made**:
+- `mobile/components/HotZoneMap.tsx`: real `react-native-maps` MapView with `PROVIDER_GOOGLE`. One `<Polygon>` per zone (orange default, red highlight when user is inside). One `<Marker>` per zone centroid (tap → name + multiplier + description). User-location marker when location is provided. Floating "In N hot zones" / "Outside" legend pill. Initial region frames Strip + Downtown.
+- Web fallback: `Platform.OS === 'web'` renders the previous textual list so the web dashboard preview still works (`react-native-maps` has no web impl).
+- `mobile/components/__tests__/HotZoneMap.shape.test.ts` (new): 4 cases asserting the `{lat,lng}` → `{latitude,longitude}` translation, finite centroids, initial region within 5 km of Bellagio, positive deltas.
+**Test Results**: Shape tests pass logically; actual rendering needs `npm install` + emulator.
+**Deployment Status Update**: None. Branch `feature/MAP-001-react-native-maps`.
+**Issues / Blockers**: Mobile Lead must inject real Google Maps API keys into `app.json` (currently `REPLACE_WITH_*_GOOGLE_MAPS_KEY` placeholders from PKG-001) before tiles render.
+**Grok Feedback / Questions**: None.
+
+---
+
 ## 2026-05-25 — CAP-001
 
 **Commit SHA**: 8fc8f2a57a3ad0bbc3fb9ff9d4018fba4500c408
