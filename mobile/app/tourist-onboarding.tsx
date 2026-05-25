@@ -1,6 +1,6 @@
 import { ScrollView, View, Text, StyleSheet, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import {
@@ -11,6 +11,7 @@ import {
   TIPPING_GUIDE,
   t,
 } from '../services/tourist-mode';
+import { loadTouristPrefs, saveTouristPrefs } from '../lib/secure-store';
 
 type Step = 'language' | 'destinations' | 'tipping' | 'confirm';
 
@@ -19,14 +20,27 @@ export default function TouristOnboarding(): JSX.Element {
   const [language, setLanguage] = useState<Language>('en');
   const [step, setStep] = useState<Step>('language');
 
-  const next = () => {
+  // Hydrate from saved prefs on mount (no-op if first run).
+  useEffect(() => {
+    loadTouristPrefs().then((p) => setLanguage(p.language)).catch(() => undefined);
+  }, []);
+
+  const next = (): void => {
     if (step === 'language') setStep('destinations');
     else if (step === 'destinations') setStep('tipping');
     else if (step === 'tipping') setStep('confirm');
-    else router.back();
+    else {
+      // Persist on final confirm.
+      void saveTouristPrefs({
+        isTourist: true,
+        language,
+        lastConfirmedAt: new Date().toISOString(),
+      });
+      router.back();
+    }
   };
 
-  const skip = () => router.back();
+  const skip = (): void => router.back();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
