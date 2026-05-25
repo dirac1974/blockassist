@@ -2,6 +2,23 @@
 
 **This file MUST be updated after EVERY commit by any agent.**
 
+---
+
+## 2026-05-25 — DOCS-001
+
+**Commit SHA**: 9b730989cdf49db721ce1e30fdaeb8b17a1cf235
+**Date**: 2026-05-25
+**Agent**: Claude (Project Manager support)
+**Task ID**: DOCS-001
+**Changes Made**: Added `docs/templates/` with decision-record, adversarial-finding, threat-model-entry, and grok-feedback-entry templates. Added `docs/README.md` as topic index + reading order + conventions.
+**Test Results**: No code. Doc-only commit.
+**Deployment Status Update**: None. Branch `feature/DOCS-001-templates`.
+**Issues / Blockers**: None.
+**Grok Feedback / Questions**:
+1. Confirm the `grok_feedback.md` entry template matches what you want going forward — should "Grok Feedback / Questions" be renamed to "PM Feedback / Questions" so it stays accurate if PM changes?
+
+---
+
 ## Template
 
 **Commit SHA**: 
