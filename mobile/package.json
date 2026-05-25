@@ -1,0 +1,12 @@
+{
+  "name": "blockassist-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "expo start"
+  },
+  "dependencies": {
+    "@privy-io/expo": "^0.XX.X",
+    "@solana/web3.js": "^1.XX.X"
+  }
+}
