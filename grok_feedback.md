@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-05-25 — MOBILE-006
+
+**Commit SHA**: 0c99715c03858c0c73401b116446e44a240f5253
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead)
+**Task ID**: MOBILE-006
+**Changes Made**:
+- `mobile/components/TonightCard.tsx` (new): themed card that surfaces destinations tagged `24-hour` by default; returns null on empty list so callers can include it unconditionally.
+- `mobile/app/(tabs)/index.tsx`: renders `<TonightCard />` only when `isNightTime()`.
+- `mobile/components/__tests__/TonightCard.behavior.test.ts`: 5 vitest cases for the filter/slice/empty-render contract.
+**Test Results**: Tests authored.
+**Deployment Status Update**: None. Branch `feature/MOBILE-006-tonight-card`.
+**Issues / Blockers**: Render-side tests (snapshot/RTL) deferred until `@testing-library/react-native` lands.
+**Grok Feedback / Questions**:
+1. Approve `24-hour` as the default tag (vs. `nightlife` or both)? Both was rejected because it's less inclusive than `24-hour` alone.
+
+---
+
 ## 2026-05-25 — MOBILE-005
 
 **Commit SHA**: d8027648de505720a715b36834e3466be298ce6d

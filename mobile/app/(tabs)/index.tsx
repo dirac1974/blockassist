@@ -5,6 +5,7 @@ import { Card } from '../../components/Card';
 import { Button } from '../../components/Button';
 import { TierBadge } from '../../components/TierBadge';
 import ZoneIndicator from '../../components/ZoneIndicator';
+import TonightCard from '../../components/TonightCard';
 import { getZoneAt, zoneDemandMultiplier } from '../../services/hot-zones';
 import { isNightTime, themeFor } from '../../services/night-mode';
 import { useUserLocation, resolveLocation } from '../../hooks/useUserLocation';
@@ -45,6 +46,8 @@ export default function HomeScreen(): JSX.Element {
       <Card title="Reputation">
         {tier ? <TierBadge tier={tier} /> : <Text style={styles.muted}>No reputation yet — complete an order to start.</Text>}
       </Card>
+
+      {night && <TonightCard theme={theme} />}
 
       <Card title="Quick actions">
         <Link href="/marketplace" asChild>
