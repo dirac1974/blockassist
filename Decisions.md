@@ -1,7 +1,7 @@
 # BlockAssist Decision Log (Append-Only)
 
-## 2026-05-25 09:45 AM IST
-**Decision**: Skip legal outreach (LEGAL-001) for now
-**Rationale**: User instruction to defer legal firm engagement. Focus on technical foundation, architecture review, and mobile development first.
-**Impact**: LEGAL-001 marked as Deferred. Other Sprint 0 tasks proceed.
-**Reversibility**: Can be resumed at any time with logged rationale.
+## 2026-05-25 11:13 AM IST
+**Decision**: Change primary pilot city from Dublin to Las Vegas
+**Rationale**: User confirmed Las Vegas is their actual location (currently using proxy). Las Vegas has strong tourism, gig economy, and crypto interest.
+**Impact**: Pilot city plan updated. Las Vegas = Primary. Secondary city TBD.
+**Reversibility**: Easy to change if needed.
