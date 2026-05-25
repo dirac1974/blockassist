@@ -1,0 +1,92 @@
+name: Repo Hygiene
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  required-files:
+    name: Required files present
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check core instruction file (CLAUDE.md or transitional docs/claude.md)
+        run: |
+          if [ -f CLAUDE.md ]; then
+            echo "OK: CLAUDE.md at repo root."
+          elif [ -f docs/claude.md ]; then
+            echo "::warning::Core instructions still at docs/claude.md; CLEANUP-001 PR moves to CLAUDE.md at root."
+          else
+            echo "::error::Neither CLAUDE.md nor docs/claude.md exists. Core agent instructions missing."
+            exit 1
+          fi
+
+      - name: Check other required files
+        run: |
+          set -e
+          missing=0
+          for f in AGENTS.md CONTRIBUTING.md README.md grok_feedback.md \
+                   docs/status/PROJECT_STATUS.md \
+                   docs/decisions/DECISIONS.md \
+                   docs/legal/COMPLIANCE_GATE.md \
+                   docs/alternatives/no-token-spec.md \
+                   docs/tokenomics/model.md \
+                   docs/testing/verification-criteria.md \
+                   docs/architecture/v2-architecture.md; do
+            if [ ! -f "$f" ]; then
+              echo "::error::Missing required file: $f"
+              missing=1
+            fi
+          done
+          exit $missing
+
+      - name: grok_feedback.md non-empty
+        run: |
+          # The template scaffold counts as non-empty; what we guard against is a
+          # totally cleared file, which would mean someone removed history.
+          lines=$(wc -l < grok_feedback.md)
+          if [ "$lines" -lt 5 ]; then
+            echo "::error::grok_feedback.md appears truncated (${lines} lines)."
+            exit 1
+          fi
+
+  markdown-link-sanity:
+    name: Markdown internal links resolve
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check intra-repo markdown links
+        run: |
+          # Conservative check: find markdown link targets that look like repo paths
+          # and warn if the target file does not exist. This is informational —
+          # link checking is hard, this just catches obvious typos.
+          set +e
+          fail=0
+          grep -rn --include='*.md' -oE '\]\([^)#]+\.md[^)]*\)' . \
+            | sed -E 's/^([^:]+):([0-9]+):\]\(([^)]+)\)$/\1 \2 \3/' \
+            | while read -r src line target; do
+                # Strip ?query or #fragment if present
+                clean=$(echo "$target" | sed -E 's/[#?].*$//')
+                # Skip URLs
+                if echo "$clean" | grep -qE '^https?://'; then
+                  continue
+                fi
+                # Resolve relative path
+                src_dir=$(dirname "$src")
+                if [ "${clean:0:1}" = "/" ]; then
+                  resolved=".${clean}"
+                else
+                  resolved="${src_dir}/${clean}"
+                fi
+                if [ ! -e "$resolved" ]; then
+                  echo "::warning file=${src},line=${line}::broken link → ${target} (resolved ${resolved})"
+                fi
+              done
+          # Warnings only; never fail the job. We can promote to failure once
+          # the link surface stabilizes.
+          exit 0
