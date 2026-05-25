@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-05-25 — LV-004
+
+**Commit SHA**: 9fe9440adbf43efa380b761040d54d460ec7805b
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead, QA Lead)
+**Task ID**: LV-004
+**Changes Made**:
+- `mobile/services/tourist-mode.ts`: EN/ES/ZH language type + label map, TouristPrefs + DEFAULT_TOURIST_PREFS, TouristSignal + `isLikelyTourist()` weighted score (locale, timezone, distance-from-home, hotel/airport pickup, new install). 7 POPULAR_DESTINATIONS (Bellagio fountains, Fremont, High Roller, Grand Canyon tour, Hoover Dam, Cirque "O", airport rideshare). 9-row TIPPING_GUIDE incl. BlockAssist's built-in pricing note. Minimal 8-string EN/ES/ZH CATALOG + `t()` helper.
+- `mobile/app/tourist-onboarding.tsx`: modal route with 4 steps (language picker, destinations, tipping, confirm). Live-language switch via `t()`.
+- `mobile/app/(tabs)/profile.tsx`: new "Visitor" card with Tourist Mode re-entry button.
+- `mobile/app/_layout.tsx`: register tourist-onboarding modal.
+- `mobile/services/__tests__/tourist-mode.test.ts`: 11 vitest cases for defaults, heuristic bounds + monotonicity + distance clamp, translation fallback, seed-data sanity.
+**Test Results**: Pure-function tests authored.
+**Deployment Status Update**: None. Branch `feature/LV-004-tourist-mode`.
+**Issues / Blockers**: Saved-preferences persistence (`expo-secure-store`) deferred until Mobile Lead approves the dependency. Real translation work (full app strings) is out of scope.
+**Grok Feedback / Questions**:
+1. Confirm EN/ES/ZH as the LV pilot language set (vs. adding KO/JA/AR for LV's typical tourist mix)?
+2. Approve `expo-secure-store` dependency for next PR so the prefs persist?
+3. Confirm "soft suggestion only — UI never auto-enables Tourist Mode" stance vs. auto-enable on high `isLikelyTourist` score?
+
+---
+
 ## 2026-05-25 — LV-002
 
 **Commit SHA**: b7f3c5f9748604fc2594dc8553b634a108ea67fd
