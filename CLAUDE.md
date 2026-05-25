@@ -8,6 +8,7 @@ This is a high-stakes financial protocol involving user custody (USDC escrow), s
 
 ## Non-Negotiable Guardrails (Revised)
 - **Decisions are revisable** with logged rationale in `docs/decisions/DECISIONS.md`. There is no "locked" state.
+- **Plan before implementation**: do a full deep thought plan before implementing any code.
 - **Compliance Gate**: No mainnet deployment or token launch until Legal & Compliance Lead signs off.
 - **Collateral & Insurance**: Must be USDC-denominated (or dual-stake with clear disclosure). Volatile $ASSIST collateral is prohibited without explicit PM + Legal approval.
 - **Primary Framework**: Use **Anchor** for all programs. Pinocchio only for profiled hot paths after MVP.

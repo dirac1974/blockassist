@@ -1,7 +1,7 @@
 # Contributing to BlockAssist
 
 ## Process
-1. Read `docs/claude.md` first
+1. Read `CLAUDE.md` (repo root) first
 2. Update `grok_feedback.md` after every commit
 3. Use standardized output format
 4. All PRs require Adversarial Reviewer approval for high-risk changes

@@ -30,4 +30,4 @@ git clone https://github.com/dirac1974/blockassist.git
 cd blockassist
 ```
 
-See `docs/claude.md` for full instructions.
+See `CLAUDE.md` for full instructions.

@@ -6,7 +6,7 @@ You are an expert developer working on **BlockAssist v2.1**, a production-grade 
 
 ## Mandatory First Steps (Do NOT skip)
 1. Read these files **in this exact order**:
-   - `docs/claude.md` (core rules & philosophy)
+   - `CLAUDE.md` (repo root — core rules & philosophy)
    - `docs/status/PROJECT_STATUS.md` (current honest status)
    - `grok_feedback.md` (must update after every commit)
    - `AGENTS.md` (team roles)
@@ -27,7 +27,7 @@ You are an expert developer working on **BlockAssist v2.1**, a production-grade 
    - Deployment status
    - Any questions for Grok
 
-4. Follow the standardized output format in `docs/claude.md`.
+4. Follow the standardized output format in `CLAUDE.md`.
 
 **Current Phase**: Phase 0 - Foundation + Legal
 **Primary Goal Right Now**: Complete Sprint 0 tasks safely and with full traceability.

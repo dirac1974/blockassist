@@ -10,4 +10,4 @@
 - **Tokenomics Engineer**: USDC yield model, simulations
 - **QA Lead**: CI-enforced testing
 
-All agents must read `docs/claude.md` first.
+All agents must read `CLAUDE.md` (repo root) first.
