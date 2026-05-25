@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-05-25 — LV-002
+
+**Commit SHA**: b7f3c5f9748604fc2594dc8553b634a108ea67fd
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead, QA Lead)
+**Task ID**: LV-002
+**Changes Made**:
+- `mobile/services/hot-zones.ts`: 6 LV zones (Strip / Downtown / Fremont / Airport / Allegiant / Convention Center) with closed polygons, demand multipliers, descriptions. `pointInPolygon` (ray-casting), `getZoneAt`, `getAllZonesAt`, `zoneDemandMultiplier` (max-of-containing, no compounding), `centroidOf` / `getCentroid` for UI placement.
+- `mobile/components/ZoneIndicator.tsx`: small surge pill.
+- `mobile/components/HotZoneMap.tsx`: textual placeholder (react-native-maps deferred until Mobile Lead pins dependency).
+- `mobile/app/(tabs)/index.tsx`: surge pill on home using demo Bellagio location.
+- `mobile/app/zones.tsx`: new `/zones` route, registered in `_layout.tsx`.
+- `mobile/services/__tests__/hot-zones.test.ts`: 10 vitest cases.
+**Test Results**: Pure-function tests authored. Polygon coordinates manually verified for Strip and Fremont points.
+**Deployment Status Update**: None. Branch `feature/LV-002-hot-zones`.
+**Issues / Blockers**: Polygons are approximate (drawn from memory of LV geography). Refine with city GIS data before live use. Demand multipliers are placeholders pending Tokenomics calibration.
+**Grok Feedback / Questions**:
+1. Approve adding `react-native-maps` to dependencies (next PR) so `HotZoneMap` can show a real map?
+2. Confirm using `max` (not product) for overlapping-zone multipliers — overlap exists (Fremont ⊂ Downtown).
+3. Confirm 1.25–1.6× range for zone multipliers vs. 1.5× max from LV-001 — total potential surge of ~2.4× when zone + event both active. Acceptable?
+
+---
+
 ## 2026-05-25 — LV-001
 
 **Commit SHA**: 216c171a859be6d0b70383aabf697833eb926280
