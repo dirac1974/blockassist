@@ -13,14 +13,14 @@ import {
 } from '../services/hot-zones';
 import { isNightTime, nightlifeBoostFor, themeFor } from '../services/night-mode';
 import ZoneIndicator from '../components/ZoneIndicator';
-
-// Demo user location near Bellagio. Replaced with expo-location once wired.
-const DEMO_USER_LOCATION = { lat: 36.1147, lng: -115.1728 };
+import { useUserLocation, resolveLocation } from '../hooks/useUserLocation';
 
 export default function MarketplaceScreen(): JSX.Element {
   const theme = themeFor();
   const [events, setEvents] = useState<Event[]>([]);
   const [eventBoostEnabled, setEventBoostEnabled] = useState(true);
+  const { location } = useUserLocation();
+  const loc = resolveLocation(location);
 
   useEffect(() => {
     fetchUpcomingEvents().then(setEvents);
@@ -28,11 +28,11 @@ export default function MarketplaceScreen(): JSX.Element {
 
   const eventBoost = useMemo(() => {
     if (!eventBoostEnabled) return { score: 0, contributors: [], active: false };
-    return computeEventBoost(DEMO_USER_LOCATION.lat, DEMO_USER_LOCATION.lng, events);
-  }, [events, eventBoostEnabled]);
+    return computeEventBoost(loc.lat, loc.lng, events);
+  }, [events, eventBoostEnabled, loc.lat, loc.lng]);
 
-  const zone = getZoneAt(DEMO_USER_LOCATION.lat, DEMO_USER_LOCATION.lng);
-  const zoneSurge = zoneDemandMultiplier(DEMO_USER_LOCATION.lat, DEMO_USER_LOCATION.lng);
+  const zone = getZoneAt(loc.lat, loc.lng);
+  const zoneSurge = zoneDemandMultiplier(loc.lat, loc.lng);
   const nightSurge = nightlifeBoostFor();
   // Combined effective surge that the matching engine would apply.
   const combinedSurge = zoneSurge * (1 + 0.5 * eventBoost.score) * nightSurge;
