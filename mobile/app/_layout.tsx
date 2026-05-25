@@ -7,6 +7,7 @@ export default function RootLayout(): JSX.Element {
       <Stack.Screen name="sign-in" options={{ presentation: 'modal', title: 'Sign in' }} />
       <Stack.Screen name="create-listing" options={{ presentation: 'modal', title: 'New listing' }} />
       <Stack.Screen name="order/[id]" options={{ title: 'Order' }} />
+      <Stack.Screen name="zones" options={{ title: 'Demand zones' }} />
     </Stack>
   );
 }

@@ -1,18 +1,26 @@
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import { ScrollView, Text, StyleSheet } from 'react-native';
 import { Link } from 'expo-router';
 import { Card } from '../../components/Card';
 import { Button } from '../../components/Button';
 import { TierBadge } from '../../components/TierBadge';
+import ZoneIndicator from '../../components/ZoneIndicator';
+import { getZoneAt, zoneDemandMultiplier } from '../../services/hot-zones';
 
 export default function HomeScreen(): JSX.Element {
   // Placeholder demo data. Real data wires in via SDK once auth lands.
   const balanceUsdc = 0;
   const tier: 'Bronze' | 'Silver' | 'Gold' | 'Platinum' | null = null;
+  // Demo: pretend the user is on the Strip near Bellagio until geolocation lands.
+  const demoLoc = { lat: 36.1147, lng: -115.1728 };
+  const zone = getZoneAt(demoLoc.lat, demoLoc.lng);
+  const surge = zoneDemandMultiplier(demoLoc.lat, demoLoc.lng);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.heading}>BlockAssist</Text>
       <Text style={styles.tagline}>USDC-escrow gig platform on Solana.</Text>
+
+      <ZoneIndicator zone={zone} multiplier={surge} />
 
       <Card title="Wallet">
         <Text style={styles.balance}>${balanceUsdc.toFixed(2)} USDC</Text>
@@ -34,6 +42,9 @@ export default function HomeScreen(): JSX.Element {
         </Link>
         <Link href="/orders" asChild>
           <Button label="My orders" variant="secondary" />
+        </Link>
+        <Link href="/zones" asChild>
+          <Button label="View Las Vegas zones" variant="secondary" />
         </Link>
       </Card>
     </ScrollView>
