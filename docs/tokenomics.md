@@ -1,63 +1,69 @@
-# BlockAssist Tokenomics v2.1 (Reconciled with Dispute System)
+# BlockAssist Tokenomics v2.1 (Final - With 20% Treasury)
 
 **Date**: May 25, 2026
 
-## Core Philosophy
-- Yield must be **variable and revenue-based** (not guaranteed fixed %)
-- Token value should remain relatively stable for exchanges
-- Dispute system should contribute to token stability
+## Updated Fee Split (Incorporating 20% Growth Treasury)
 
-## 1. Yield Model (Revenue Share - Not Fixed %)
+**Total Platform Fee**: 6%
 
-**Recommended Model**: Hybrid veASSIST + Usage Airdrop
+| Allocation                    | % of Total Fees | Purpose                                      |
+|-------------------------------|-----------------|----------------------------------------------|
+| Operations                    | 1.2%            | Platform maintenance & team                  |
+| Insurance Pool                | 1.8%            | Covers extreme losses & insurance            |
+| **Growth & Advertising Treasury** | **1.2%**     | Investor attraction, marketing, partnerships |
+| veASSIST Stakers (Yield)      | 1.2%            | Long-term holders + governance               |
+| Weekly Usage Airdrop          | 0.6%            | Active users + late joiners                  |
 
-**Yield Source**:
-- 40% of the 3% Ecosystem Fee (i.e., 1.2% of total platform fees) goes to veASSIST stakers proportionally.
-- Additional 30% of platform fees goes to Weekly Usage Airdrop (active users + stakers).
+**Note**: The 20% Growth Treasury (1.2% of fees) is designed to attract investors and fund aggressive advertising/marketing, especially during the Las Vegas pilot launch.
 
-**Why Variable?**
-- Yield = (Platform Revenue × 40%) / Total veASSIST Supply
-- This naturally scales with platform success.
-- No guaranteed APY (avoids regulatory and expectation issues).
+## Users as "Platform Owners"
 
-**Example**:
-- If monthly platform fees = $100,000
-- Then $40,000 goes to veASSIST stakers
-- If total veASSIST = 10,000,000
-- Yield ≈ 4.8% monthly (variable based on actual revenue)
+**How Users Benefit from Participating/Staking**:
 
-## 2. Inflation / Deflation Management
+1. **Revenue Share** (veASSIST holders)
+   - Earn proportional share of platform fees
+   - Higher stake + longer lock = higher yield
 
-**Deflationary Mechanisms**:
-- 15% of lost dispute bonds → Buyback & Burn $ASSIST
-- 20% of platform fees → Treasury buyback during low-price periods
+2. **Governance Rights**
+   - Vote on platform parameters, fee changes, feature priorities
+   - veASSIST gives stronger voting power
 
-**Controlled Inflation**:
-- Weekly Usage Airdrop (30% of fees) creates ongoing distribution
-- Staking rewards are revenue-backed (not inflationary printing)
+3. **Advertising & Growth Rewards** (New)
+   - Users who actively promote the platform (referrals, content, events) can earn bonus $ASSIST from the Growth Treasury
+   - Top referrers and community builders get quarterly bonuses
 
-**Stability Strategy**:
-- Treasury maintains a **Stability Reserve** (funded from fees + dispute bonds)
-- During high sell pressure, treasury can buy back $ASSIST to support price
-- Goal: Keep $ASSIST relatively stable vs USDC for easier conversion
+4. **Long-term Value Appreciation**
+   - Buyback & burn from dispute bonds + fees
+   - Treasury stability reserve protects price during volatility
+   - As platform grows, demand for $ASSIST increases (collateral + staking + governance)
 
-## 3. Integration with Dispute System
+## Long-Term Stability Mechanisms
 
-**Dispute Contributions to Tokenomics**:
-- 15% of lost bonds → Buyback & Burn
-- 10% of lost bonds → Jury Rewards (paid in $ASSIST)
-- Creates constant buy pressure from dispute activity
+1. **Revenue-Backed Yield**
+   - No fixed APY. Yield = actual platform revenue share
+   - Scales sustainably with success
 
-**Synergy**:
-- More disputes = more buybacks = stronger deflationary pressure
-- Honest behavior (fewer disputes) = more stable token value
+2. **Deflationary Pressure**
+   - 15% of lost dispute bonds → Buyback & Burn
+   - 20% of platform fees → Treasury buybacks during sell pressure
 
-## 4. Final Recommendation
+3. **Treasury Stability Reserve**
+   - Maintains liquidity for price support
+   - Funded from fees + dispute bonds
 
-**Primary Model**: Hybrid veASSIST + Usage Airdrop + Revenue Share
-- Yield: Variable (tied to actual platform revenue)
-- Inflation: Controlled via usage airdrops
-- Deflation: Buyback & burn from fees + dispute bonds
-- Stability: Treasury reserve + dispute-driven buy pressure
+4. **Controlled Distribution**
+   - Weekly usage airdrops prevent whale hoarding
+   - Late joiners can still earn through activity + staking
 
-This model is sustainable, fair to late joiners, and directly benefits from dispute system activity.
+5. **Vested Treasury Allocation**
+   - 20% Growth Treasury is vested over 24 months
+   - Prevents sudden dumps and ensures long-term alignment
+
+## Token Supply Allocation (Initial)
+
+- 40% Community & Stakers (gradual release)
+- 25% Liquidity & Ecosystem
+- **20% Growth & Advertising Treasury** (vested 24 months)
+- 15% Team & Advisors (4-year vesting)
+
+**Goal**: Sustainable growth, fair to late joiners, long-term price stability, and strong incentives for users to act as platform owners.
