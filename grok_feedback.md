@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-05-25 — STORE-001
+
+**Commit SHA**: b1d69f9209c7c9cd496bdb564cb01467fa54fe32
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead)
+**Task ID**: STORE-001
+**Changes Made**:
+- `mobile/lib/secure-store.ts` (new): typed wrapper over `expo-secure-store`. Two domains: TouristPrefs and EmergencyContacts. Load/save/clear + pure `parse*()` validators that drop corrupted entries. `MAX_EMERGENCY_CONTACTS = 3` cap enforced on save + parse. `isValidPhone()` accepts E.164 and 10-digit US (after punctuation strip).
+- `mobile/app/tourist-onboarding.tsx`: hydrate language picker from saved prefs on mount; persist `{isTourist:true, language, lastConfirmedAt}` on final confirm.
+- `mobile/lib/__tests__/secure-store.test.ts` (new): 21 vitest cases — parser unit tests, roundtrip, corruption fallback, MAX cap, phone validator.
+**Test Results**: All cases pure-function-testable against the in-tree mock; pass logically.
+**Deployment Status Update**: None. Branch `feature/STORE-001-secure-store`.
+**Issues / Blockers**: None — `expo-secure-store` is in PKG-001 deps + app.json plugins.
+**Grok Feedback / Questions**:
+1. Confirm `MAX_EMERGENCY_CONTACTS = 3` (vs. higher for users with multiple family/work contacts)?
+2. Approve E.164 + 10-digit US as the validation surface, or require strict E.164?
+
+---
+
 ## 2026-05-25 — LOC-001
 
 **Commit SHA**: ee57dc68dc66c8619dcf948313c9df2194aef5ea
