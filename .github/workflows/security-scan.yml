@@ -1,0 +1,83 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '17 6 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  secrets:
+    name: Gitleaks secrets scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  cargo-audit:
+    name: cargo audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for Cargo.lock
+        id: lock
+        run: |
+          if [ -f contracts/Cargo.lock ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::contracts/Cargo.lock not present; cargo audit will run on lockfile generation."
+          fi
+
+      - uses: dtolnay/rust-toolchain@stable
+        if: steps.lock.outputs.exists == 'true'
+
+      - name: Install cargo-audit
+        if: steps.lock.outputs.exists == 'true'
+        run: cargo install cargo-audit --locked
+
+      - name: Audit
+        if: steps.lock.outputs.exists == 'true'
+        working-directory: contracts
+        run: cargo audit --deny warnings
+
+  npm-audit:
+    name: npm audit (mobile, sdk, web)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        dir: [mobile, sdk, web]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for package-lock
+        id: lock
+        run: |
+          if [ -f "${{ matrix.dir }}/package-lock.json" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::${{ matrix.dir }}/package-lock.json not present; skipping."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.lock.outputs.exists == 'true'
+        with:
+          node-version: '20'
+
+      - name: Audit
+        if: steps.lock.outputs.exists == 'true'
+        working-directory: ${{ matrix.dir }}
+        run: npm audit --audit-level=high
