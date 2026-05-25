@@ -2,6 +2,24 @@
 
 ---
 
+## 2026-05-25 — LOC-001
+
+**Commit SHA**: ee57dc68dc66c8619dcf948313c9df2194aef5ea
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead)
+**Task ID**: LOC-001
+**Changes Made**:
+- `mobile/hooks/useUserLocation.ts`: real `expo-location` integration. `requestForegroundPermissionsAsync` → permission status; one-shot `getCurrentPositionAsync`; continuous `watchPositionAsync` (balanced accuracy, 25 m distance / 5 s time interval). On denied/restricted: state reflects truth AND falls back to DEMO_LOCATION so screens still render. Watcher cleanup on unmount + on re-request.
+- New pure helper `permissionStatusFrom(perm)` factors out the granted/denied/restricted decision rule for unit testing.
+- Optional `forceDemo` flag for offline UI development.
+- `mobile/hooks/__tests__/useUserLocation.test.ts`: +5 cases covering `permissionStatusFrom` for granted, denied (canAskAgain=true), restricted (canAskAgain=false), undetermined-as-denied, and the canAskAgain=false fallback to restricted regardless of base status.
+**Test Results**: Pure-helper tests pass; full hook behaviour (state transitions during permission grant) deferred until `@testing-library/react-hooks` lands.
+**Deployment Status Update**: None. Branch `feature/LOC-001-expo-location`.
+**Issues / Blockers**: None — `expo-location` is in PKG-001's pinned deps; iOS/Android usage strings + background-modes already configured in `app.json`.
+**Grok Feedback / Questions**: None.
+
+---
+
 ## 2026-05-25 — MAP-001
 
 **Commit SHA**: b10dbb2f4fbe34857c97f2605950e4a7a124bcf9

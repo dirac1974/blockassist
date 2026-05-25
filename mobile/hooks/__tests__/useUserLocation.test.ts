@@ -2,7 +2,7 @@
 // Hook behaviour itself needs @testing-library/react-hooks; deferred.
 
 import { describe, it, expect } from 'vitest';
-import { DEMO_LOCATION, resolveLocation } from '../useUserLocation';
+import { DEMO_LOCATION, permissionStatusFrom, resolveLocation } from '../useUserLocation';
 
 describe('resolveLocation', () => {
   it('returns the demo location when none is passed', () => {
@@ -23,5 +23,23 @@ describe('DEMO_LOCATION sanity', () => {
   });
   it('is flagged as demo', () => {
     expect(DEMO_LOCATION.demo).toBe(true);
+  });
+});
+
+describe('permissionStatusFrom', () => {
+  it('granted → granted', () => {
+    expect(permissionStatusFrom({ status: 'granted' })).toBe('granted');
+  });
+  it('denied + canAskAgain=true → denied', () => {
+    expect(permissionStatusFrom({ status: 'denied', canAskAgain: true })).toBe('denied');
+  });
+  it('denied + canAskAgain=false → restricted (cannot prompt again)', () => {
+    expect(permissionStatusFrom({ status: 'denied', canAskAgain: false })).toBe('restricted');
+  });
+  it('undetermined → denied (treated as not-yet-granted)', () => {
+    expect(permissionStatusFrom({ status: 'undetermined', canAskAgain: true })).toBe('denied');
+  });
+  it('any non-granted with canAskAgain=false → restricted', () => {
+    expect(permissionStatusFrom({ status: 'undetermined', canAskAgain: false })).toBe('restricted');
   });
 });
