@@ -1,4 +1,5 @@
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import { Link } from 'expo-router';
 import { Card } from '../../components/Card';
 import { Button } from '../../components/Button';
 import { TierBadge } from '../../components/TierBadge';
@@ -28,6 +29,12 @@ export default function ProfileScreen(): JSX.Element {
           <TierBadge tier={tier} />
           <Text style={styles.muted}>{completedOrders} orders · {(disputeLossRate * 100).toFixed(1)}% dispute-loss rate</Text>
         </View>
+      </Card>
+
+      <Card title="Visitor">
+        <Link href="/tourist-onboarding" asChild>
+          <Button label="Tourist Mode" variant="secondary" />
+        </Link>
       </Card>
 
       <Card title="Settings">
