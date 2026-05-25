@@ -32,4 +32,8 @@ You are an expert developer working on **BlockAssist v2.1**, a production-grade 
 **Current Phase**: Phase 0 - Foundation + Legal
 **Primary Goal Right Now**: Complete Sprint 0 tasks safely and with full traceability.
 
+## Active Scope Notes (2026-05-25)
+
+- **LEGAL-001 deferred** by PM directive. Do not engage outside counsel or perform legal-outreach work in this session. See `docs/sprint-0/LEGAL-001.md` and `docs/decisions/DECISIONS.md` (entry "2026-05-25 — LEGAL-001 deferred"). All other halts from ADV-001 remain in force.
+
 Start by confirming you have read the required files and stating which agent role you are using.
