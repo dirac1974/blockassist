@@ -1,33 +1,22 @@
 # BlockAssist v2.1
 
-**Decentralized Blockchain-Powered Assistant Platform**
+**Cross-Platform Mobile App** (Android + iOS)
 
-Production-grade Solana dApp for delivery, tasks, and custom gigs.
+Production-grade decentralized assistant platform built with **React Native + Expo** for true cross-platform support on Android and iOS from a single codebase.
 
 **Key Features (v2.1)**
+- Fully cross-platform (Android 8.0+ and iOS 14+)
 - USDC escrow with optimistic release
-- USDC-denominated collateral (assistants)
-- Solana-native dispute system (optimistic + on-chain jury fallback)
+- USDC-denominated collateral
+- Solana-native dispute system
 - Privy onboarding with passkeys
-- ~6% platform fee with real yield to stakers
-- ZK Compression for scalable reputation
+- ~6% platform fee
 
-**Status**: Phase 0 (Foundation + Legal) — In Progress
+**Tech Stack**
+- Mobile: React Native + Expo (single codebase for Android & iOS)
+- Blockchain: Solana (Anchor)
+- Wallet: Privy (embedded + external)
 
-**Critical Updates (May 25, 2026)**
-- Legal & Compliance workstream added with hard gate before mainnet
-- Collateral changed to USDC
-- "No rework" policy removed — decisions are revisable with logged rationale
-- Adversarial Reviewer role added with halt authority
-- Timeline revised to realistic 12–18 months
+**Status**: Phase 0 – Foundation + Legal
 
-Repo created after comprehensive adversarial review.
-
-## Quick Start
-
-```bash
-git clone https://github.com/dirac1974/blockassist.git
-cd blockassist
-```
-
-See `docs/claude.md` for full instructions.
+See `docs/claude.md` and `mobile/` folder for implementation details.
