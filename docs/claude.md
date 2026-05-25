@@ -1,16 +1,22 @@
 # BlockAssist v2.1 — Project Instructions for All AI Agents
 
 **MUST READ BEFORE ANY WORK**  
-**Version**: 2.1 (Post-Adversarial Review — May 25, 2026)
+**Version**: 2.1 (Updated May 25, 2026)
 
-## Core Philosophy (Updated)
-This is a high-stakes financial protocol... [rest unchanged]
+## Core Philosophy
+High-stakes financial protocol. Prioritize soundness over speed.
 
-## Mobile App Requirements (Explicit)
-- Build a **true cross-platform app** using **React Native + Expo**
-- Must support **Android 8.0+** and **iOS 14+** from a single codebase
-- Use Expo for easy builds, OTA updates, and EAS Build for production
-- Platform-specific code only when absolutely necessary (use `Platform.OS`)
-- Test on both Android emulator and iOS simulator
+## Mobile App (Cross-Platform)
+- **Framework**: React Native + Expo (single codebase)
+- **Platforms**: Android 8.0+ and iOS 14+
+- **Builds**: Use EAS Build for production Android & iOS releases
+- **Testing**: Must test on both Android emulator and iOS simulator
 
-[rest of file unchanged]
+## Non-Negotiable Guardrails
+- Decisions are revisable with logged rationale
+- Compliance Gate before mainnet
+- USDC-denominated collateral
+- Anchor primary (Pinocchio later)
+- Always update `grok_feedback.md` after commits
+
+[Full file available in repo]
