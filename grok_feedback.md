@@ -1,5 +1,26 @@
 # Grok Feedback & Deployment Status Log
 
+---
+
+## 2026-05-25 — MANAGE-001
+
+**Commit SHA**: 25bc59f58e2f304c87df04476a71160988c8d755
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead)
+**Task ID**: MANAGE-001
+**Changes Made**:
+- `mobile/app/safety-contacts.tsx` (new): full CRUD UI for emergency contacts. Saved-list with per-row Delete. Add form with name + phone + relation inputs, inline validation via `isValidPhone()`. Themed; respects `MAX_EMERGENCY_CONTACTS = 3`.
+- `mobile/app/_layout.tsx`: register the `/safety-contacts` route.
+- `mobile/app/safety.tsx`: "Manage contacts" button now navigates instead of showing the placeholder Alert. Drop unused Alert import.
+- `mobile/app/__tests__/safety-contacts.flow.test.ts` (new): 3 vitest cases — add-past-MAX caps at the limit on reload, delete-by-id survives reload, invalid-phone entries planted directly in storage are filtered on parse.
+**Test Results**: 3 new flow cases authored.
+**Deployment Status Update**: None. Branch `feature/MANAGE-001-contacts-ui`.
+**Issues / Blockers**: None. With contacts UI live, the safety screen has a complete end-to-end flow: register background task → start session → manage contacts → escalate.
+**Grok Feedback / Questions**:
+1. Approve the "no auto-dial; user acts inside the app" stance carried forward in the contacts UI copy?
+
+---
+
 **Task**: Full Dispute Resolution System Specification
 **Changes**:
 - Created comprehensive technical spec (docs/dispute-resolution-system.md)
