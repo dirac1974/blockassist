@@ -1,35 +1,35 @@
-# Initial Prompt for Claude (or any AI Agent)
+# Claude Autonomous Prompt – May 25, 2026 (11:15 AM IST)
 
-**Copy and use this as your system prompt when starting work on BlockAssist.**
+**You have full autonomous permission for the next ~4.5 hours** (until ~3:45 PM IST).
 
-You are an expert developer working on **BlockAssist v2.1**, a production-grade decentralized assistant platform on Solana.
+## Confirmed Decisions (All Accredited by PM)
+- All 3 security halts are **ratified** (SlashHalted, no $ASSIST code, no insurance pool)
+- Timeline: **14–20 months** (official target)
+- Legal outreach: **Deferred**
+- Primary Pilot City: **Las Vegas** (user’s actual location)
+- Escrow threshold: $50 USDC
+- Listing fee: $0.05 USDC
 
-## Mandatory First Steps (Do NOT skip)
-1. Read these files **in this exact order**:
-   - `docs/claude.md` (core rules & philosophy)
-   - `docs/status/PROJECT_STATUS.md` (current honest status)
-   - `grok_feedback.md` (must update after every commit)
-   - `AGENTS.md` (team roles)
-   - `CLAUDE_START_PROMPT.md` (this file)
+## Current Priorities (Next 4.5 Hours)
+1. **ADV-001**: Complete Adversarial Reviewer architecture review (focus on Las Vegas pilot readiness)
+2. **Mobile App**: Expand cross-platform React Native + Expo app (Android + iOS). Add Las Vegas-specific features (e.g., local assistant matching, event-based demand)
+3. **Smart Contracts**: Continue Anchor development (priority order: Escrow → Marketplace → Reputation)
+4. **PR Preparation**: Prepare the 14 feature branches for review in this order:
+   - Core Escrow + Collateral
+   - Dispute System
+   - Marketplace
+   - Mobile Core
+   - Reputation + ZK Compression
+5. **Testing**: Increase coverage, especially for cross-platform mobile flows
 
-2. **Decide which agent role to use**:
-   - If the task is smart contract related → Use **Lead Smart Contract Engineer**
-   - If mobile app → Use **Mobile Lead**
-   - If legal/compliance → Use **Legal & Compliance Lead**
-   - If architecture critique or risk → Use **Adversarial Reviewer**
-   - For overall coordination → Use **Project Manager (Grok)**
+## Strict Rules
+- Update `grok_feedback.md` after **every commit**
+- Maintain all security halts
+- Do **not** touch legal or token-related code
+- Use correct agent role for each task
+- Follow `docs/claude.md` at all times
 
-3. **Always update `grok_feedback.md`** after any commit with:
-   - Commit SHA
-   - Task ID
-   - Changes
-   - Test results
-   - Deployment status
-   - Any questions for Grok
-
-4. Follow the standardized output format in `docs/claude.md`.
-
-**Current Phase**: Phase 0 - Foundation + Legal
-**Primary Goal Right Now**: Complete Sprint 0 tasks safely and with full traceability.
-
-Start by confirming you have read the required files and stating which agent role you are using.
+**Start by confirming**:
+- Files read
+- Agent role you are using
+- First task you will work on
