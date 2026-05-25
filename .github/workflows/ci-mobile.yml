@@ -1,0 +1,54 @@
+name: CI - Mobile
+
+on:
+  push:
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/ci-mobile.yml'
+  pull_request:
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/ci-mobile.yml'
+
+jobs:
+  lint-and-typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for lockfile
+        id: lockfile
+        run: |
+          if [ -f mobile/package-lock.json ] || [ -f mobile/yarn.lock ] || [ -f mobile/pnpm-lock.yaml ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::mobile/ has no lockfile yet; skipping install/lint/typecheck. Workflow auto-activates when a lockfile is committed."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.lockfile.outputs.exists == 'true'
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Install
+        if: steps.lockfile.outputs.exists == 'true'
+        working-directory: mobile
+        run: npm ci
+
+      - name: Lint
+        if: steps.lockfile.outputs.exists == 'true'
+        working-directory: mobile
+        run: npm run lint --if-present
+
+      - name: Typecheck
+        if: steps.lockfile.outputs.exists == 'true'
+        working-directory: mobile
+        run: npm run typecheck --if-present
+
+      - name: Test
+        if: steps.lockfile.outputs.exists == 'true'
+        working-directory: mobile
+        run: npm test --if-present -- --ci
