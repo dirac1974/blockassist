@@ -13,18 +13,45 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.blockassist.app"
+      "bundleIdentifier": "com.blockassist.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "BlockAssist uses your location to match you with nearby assistants and surface relevant Las Vegas events and zones.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "BlockAssist uses your location during active trips so your safety contacts can see you reach your destination.",
+        "UIBackgroundModes": ["fetch", "location"]
+      },
+      "config": {
+        "googleMapsApiKey": "REPLACE_WITH_IOS_GOOGLE_MAPS_KEY"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.blockassist.app"
+      "package": "com.blockassist.app",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "FOREGROUND_SERVICE"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "REPLACE_WITH_ANDROID_GOOGLE_MAPS_KEY"
+        }
+      }
     },
     "plugins": [
       "expo-router",
-      "@privy-io/expo"
+      "@privy-io/expo",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location during active trips so your safety contacts can see you reach your destination."
+        }
+      ],
+      "expo-secure-store",
+      "expo-task-manager"
     ]
   }
 }
