@@ -1,92 +1,147 @@
 # BlockAssist Project Status (Living Document)
 
-**Last update**: 2026-05-25 (after autonomous Sprint 0 session)
-**Current Phase**: Phase 0 — Foundation + Legal (Legal partially deferred — see below)
-**Realistic Target**: Mainnet + 2 cities in **14–20 months** (range; was "12–18 months" — revised per `docs/adversarial/v2.1-review-deep-dive.md` §C)
-**Overall Progress**: ~15% (was 5%; doc + scaffolding work materially advanced this sprint, but no programs yet built/audited)
-**Honest Assessment**: Process, adversarial review, threat model, and scaffolding are real artifacts now. Major open risks unchanged: legal viability, token economic necessity, insurance backstop model, dispute primitive choice on Solana.
+**Last update**: 2026-05-25 (after Sprint 2 — blocker resolution + dispute scaffolding).
+**Current Phase**: Phase 0 complete. Sprint 1 (Las Vegas pilot features) complete. Sprint 2 (blocker resolution) complete. Phase 1 (core contracts + dispute build-out) in flight.
+**Realistic Target**: Mainnet + 2 cities in **14–20 months** (revised per `docs/adversarial/v2.1-review-deep-dive.md` §C; was 12–18).
+**Overall Progress**: **~35%** (was 15% post-Sprint-0; advanced materially by Sprint 1 LV features + Sprint 2 dependency resolution + dispute scaffolding).
+**Honest Assessment**: All identified blockers from Sprints 0 + 1 are cleared. Mobile foundation is buildable (Expo SDK 51 pinned, native deps wired). Dispute program now compiles and aligns with the user's API surface. Major remaining risks: legal viability, slashing spec, jury selection primitive, real-world tests on emulators by a human Mobile Lead.
+
+---
 
 ## Active Halts (from `docs/adversarial/v2.1-review.md`)
 
-| ID | Workstream | Halt until |
-|---|---|---|
-| ADV-F-005 | Collateral *slashing* implementation | Slashing spec finalized + Legal-reviewed |
-| ADV-F-006 | Token launch / staker yield | LEGAL-002 securities opinion delivered |
-| ADV-F-007 | Insurance pool implementation | Legal vehicle + funding model specified |
-
-Deposit/withdraw collateral mechanics are *not* halted and are implemented under CONTRACT-003.
+| ID | Workstream | Halt until | Status today |
+|---|---|---|---|
+| ADV-F-005 | Collateral *slashing* | Slashing spec finalized + Legal-reviewed | `collateral.slash()` returns `SlashHalted`; `dispute.resolve_dispute()` emits `HaltReason::SlashHaltedAdvF005` (DISPUTE-001). Deposit/withdraw work. |
+| ADV-F-006 | Token launch / staker yield | LEGAL-002 securities opinion delivered | No `$ASSIST` code path added in any session. |
+| ADV-F-007 | Insurance pool implementation | Legal vehicle + funding model specified | No implementation. |
 
 ## Active Deferrals
 
 | Item | Effective | Re-entry |
 |---|---|---|
-| LEGAL-001 — engage crypto-specialist counsel | 2026-05-25 (PM directive 09:45 IST) | PM lift, mainnet target commit, or token-decision trigger. See `docs/sprint-0/LEGAL-001.md`. |
+| LEGAL-001 — engage crypto-specialist counsel | 2026-05-25 09:45 IST (PM directive) | PM lift, mainnet target commit, or token-decision trigger. See `docs/sprint-0/LEGAL-001.md`. |
 | LEGAL-002 — securities opinion | Implied by LEGAL-001 deferral | When LEGAL-001 resumes. |
 
-## Sprint 0 Status (2026-05-25 snapshot)
+---
 
-13 PRs open on the repo as of this snapshot — see `docs/sprint-0/README.md` for the full table.
+## Sprint 0 Status — COMPLETE
 
-- **ADV-001 + ADV-001-v2** (review + deep dive) — complete.
-- **SEC-001** (threat model) — complete.
-- **COMPLIANCE-001** (gate checklist) — complete; further items gated on LEGAL.
-- **LEGAL-003** (no-token spec) — complete.
-- **DOCS-001** (templates + index) — complete.
-- **CONTRACT-001** (CI hardening) — complete.
-- **DEFER-LEGAL-001** — logged.
-- **MOBILE-001** (tabs + screens + components) — complete.
-- **CONTRACT-002** (escrow program + state-machine spec) — complete; needs declare_id real-keypair replacement before build.
-- **CONTRACT-003** (marketplace + collateral deposit/withdraw + slashing spec draft) — complete; slashing implementation halted.
-- **TEST-001** (Anchor tests + mobile pure tests) — complete; depends on CONTRACT-002 wiring.
-- **STATUS-001** (this update) — in this PR.
+13 of 14 PRs merged. PR #1 (CLEANUP-001) closed as superseded. Full table in `docs/sprint-0/README.md`.
+
+Headline artifacts:
+- Adversarial review + STRIDE threat model + No-Token Alternative spec + Compliance Gate.
+- 5 Anchor programs scaffolded; escrow + marketplace + collateral *deposit/withdraw* implemented.
+- Mobile shell with Expo Router tabs, sign-in modal, order detail, create-listing.
+- CI workflows for mobile/web/sdk + gitleaks + repo hygiene.
+
+## Sprint 1 Status — COMPLETE
+
+11 PRs merged (PRs #15–25). 86 new vitest cases.
+
+Headline outcomes:
+- **LV-001**: event-based matching scoring (distance/time/attendance/category factors, stacking, `computeMatchScore`).
+- **LV-002**: 6 LV hot zones (Strip / Downtown / Fremont / Airport / Allegiant / Convention Center) with point-in-polygon + surge.
+- **LV-004**: Tourist Mode onboarding modal (EN/ES/ZH), `isLikelyTourist` heuristic, 7 destinations, 9-row tipping guide.
+- **LV-005**: night-mode theme + safety state machine (active → late → SOS sticky); foreground-only at the end of Sprint 1.
+- **MOBILE-002..006**: surge pill on home, `useUserLocation` hook, `AssistantMatching` unified service + `MatchingEngine` interface, tipping calculator + `VenueTag`, "Tonight in Vegas" night-only home card.
+- **DOCS-002 + DOCS-003**: refreshed LV technical specs + sprint-1 summary.
+
+Full per-PR table in `grok_feedback.md`.
+
+## Sprint 2 Status — COMPLETE
+
+9 PRs merged (PRs #26–34). 47 new vitest cases. **All 4 PM-approved deps wired.** Total tests across three sprints ≈ **169**.
+
+Headline outcomes:
+- **PKG-001**: pin Expo SDK 51 matrix + Privy 0.40.0 + web3.js 1.95.3 + the 4 approved deps. Add `tsconfig.json`, `vitest.config.ts`, 4 in-tree native-module mocks. `app.json` gains location usage strings, background-fetch modes, Android `ACCESS_*_LOCATION` + `FOREGROUND_SERVICE` permissions, Google Maps API key placeholders.
+- **CAP-001**: `COMPOUND_SURGE_CAP` lowered to **2.8×** (PM-ratified); rationale + category-weight rationale documented.
+- **MAP-001**: real `react-native-maps` with `Polygon` per zone + `Marker` per centroid + user-location pin + inside-zone highlight. Textual web fallback preserved.
+- **LOC-001**: real `expo-location` permission flow + `watchPositionAsync`; denied/restricted fall back to `DEMO_LOCATION`.
+- **STORE-001**: `expo-secure-store` wrapper for TouristPrefs + EmergencyContacts (MAX 3); pure parsers + `isValidPhone`.
+- **SAFETY-001**: `expo-task-manager` background tick reading persisted session; SOS sticky. Soft escalation only.
+- **TEST-001b**: 4 e2e integration tests (surge cap, venue tags, safety bg loop).
+- **MANAGE-001**: `/safety-contacts` CRUD UI replacing the placeholder Alert in safety screen.
+- **DISPUTE-001**: fixed the dispute program scaffolding so `anchor build` compiles. Aligned with main's `2e3661d` API (7 instructions). `resolve_dispute` HALTED inline with `HaltReason::SlashHaltedAdvF005`. Follow-ups DISPUTE-002 (VRF jury), DISPUTE-003 (quadratic voting), DISPUTE-004 (real resolve) deferred.
+
+## Resolved Blockers (since Sprint 1 close)
+
+- ✅ Mobile `package.json` placeholders (`^0.XX.X` → real pins).
+- ✅ `react-native-maps` integration replaces the textual placeholder.
+- ✅ `expo-location` wired into `useUserLocation`.
+- ✅ `expo-secure-store` wired (TouristPrefs + EmergencyContacts).
+- ✅ `expo-task-manager` background safety tick.
+- ✅ Compound-surge cap settled at 2.8× with regression tests.
+- ✅ Emergency contacts CRUD UI live.
+- ✅ Dispute program compiles in Anchor.
+
+---
 
 ## Key Decisions Log (extract; full log in `docs/decisions/DECISIONS.md`)
 
 | Date | Decision | Approved By |
 |------|----------|-------------|
 | 2026-05-25 | Remove "locked / no rework" policy | Grok + Adversarial Reviewer |
-| 2026-05-25 | Add Legal & Compliance Lead + hard Compliance Gate | Grok |
+| 2026-05-25 | Legal & Compliance Lead + hard Compliance Gate | Grok |
 | 2026-05-25 | USDC-denominated collateral | Grok + Legal |
-| 2026-05-25 | Drop Pinocchio as Phase 0 mandate | Lead SC Engineer |
-| 2026-05-25 | Drop Alpenglow as locked requirement | Grok |
+| 2026-05-25 | Drop Pinocchio as Phase 0 mandate; Anchor primary | Lead SC Engineer |
 | 2026-05-25 | Solana-native dispute (cross-chain Kleros experimental only) | Grok + Security |
 | 2026-05-25 | Adversarial Reviewer role with halt authority | Grok |
-| 2026-05-25 | ADV-001 halt items: collateral slashing, token launch, insurance pool | PM ack pending |
-| 2026-05-25 | LEGAL-001 deferred for this session | PM (Grok) |
+| 2026-05-25 | ADV-001 halt items: collateral slashing, token launch, insurance pool | PM |
+| 2026-05-25 | LEGAL-001 deferred for the autonomous-session window | PM |
+| 2026-05-25 | Las Vegas as primary pilot city | PM |
+| 2026-05-25 | Timeline 14–20 months | PM |
+| 2026-05-25 | COMPOUND_SURGE_CAP = 2.8× | PM |
+| 2026-05-25 | Dependencies approved: expo-location, expo-secure-store, expo-task-manager, react-native-maps | PM |
+| 2026-05-25 | Tipping range 0–15% | PM |
+| 2026-05-25 | Category weights (festival 1.0 → conference 0.5) | PM |
+
+---
 
 ## Open High-Risk Items
 
-1. Final securities opinion on fee-funded $ASSIST yield — paused with LEGAL-001.
+1. Final securities opinion on fee-funded `$ASSIST` yield — paused with LEGAL-001.
 2. Insurance pool backstop model — halt in force; legal vehicle unselected.
 3. Sybil resistance for reputation-weighted yield — ADV-F-009 / ADV-D-001 / CC-7. No primitive chosen.
-4. On-chain Solana jury primitive — ADV-F-004; phased plan in deep-dive §B but no implementation chosen.
-5. Named human Adversarial Reviewer — ADV-F-013 unfilled.
-6. Pilot cities undecided — ADV-F-016. Recommended non-US to avoid MTL critical path.
+4. On-chain Solana jury primitive — Switchboard VRF is the current plan (DISPUTE-002); not yet wired.
+5. Named human Adversarial Reviewer — ADV-F-013 still unfilled.
+6. Real Google Maps API keys — placeholder strings in `app.json` (PKG-001 / MAP-001).
+7. Human Mobile Lead `npm install` + emulator smoke test — DISPUTE/LV work is logically complete but unverified on a real device.
 
 ## Open Questions (top picks for PM to clear)
 
-1. Ratify the 3 halt items (ADV-001 §6) — or contest in DECISIONS.md.
-2. Confirm 14–20mo timeline range (this doc).
-3. LEGAL-001 deferral interval — open-ended or session-scoped?
-4. Named human Adversarial Reviewer.
-5. Pilot city candidates + Legal applicability matrix.
-6. Mobile SDK version pins (currently `^0.XX.X` placeholders).
-7. Approve `AFFIRMATIVE_ACCEPT_THRESHOLD_USDC_BASE = $50` (ADV-D-002).
-8. Approve listing fee $0.05 USDC (ADV-D-007).
+1. Approve DISPUTE-002 (Switchboard VRF jury) as the next contracts work item.
+2. Confirm DISPUTE-003 quadratic-voting parameters (vote weight curve, max weight per juror).
+3. DISPUTE-004 will land **after** ADV-F-005 lifts — confirm that ordering.
+4. Inject real Google Maps API keys into `app.json` so tiles render on emulators.
+5. Approve `@testing-library/react-native` so render-side tests can land.
+6. Schedule a Mobile-Lead `npm install` + emulator smoke session.
+
+---
 
 ## Next Milestone
 
-Phase 0 closure target: **rolled to 2026-07** (was June). Driven by LEGAL-001 deferral and slashing-spec dependence on Legal review.
+**Phase 1 — Core contracts + dispute build-out**. Targets:
+- DISPUTE-002 (VRF jury) + DISPUTE-003 (quadratic voting) implementations.
+- Anchor TS tests for the dispute happy path (DISPUTE-005).
+- Real device validation pass on iOS + Android.
+
+Phase 0 closure was rolled to 2026-07 originally (LEGAL-001 deferral). With Sprints 1 + 2 complete, the foundation milestones are met; only legal-gated items remain on the Phase 0 list (DISPUTE-004 final body waits on ADV-F-005, mainnet waits on the Compliance Gate).
+
+---
 
 ## Cross-references
 
 - `CLAUDE.md` — guardrails.
-- `docs/adversarial/v2.1-review.md` — 16 base findings + 3 halts.
-- `docs/adversarial/v2.1-review-deep-dive.md` — 10 attack scenarios, dispute landscape, timeline analysis, mobile risks.
-- `docs/security/threat-model.md` — STRIDE + 15-item mitigation backlog.
-- `docs/legal/COMPLIANCE_GATE.md` — milestone-gated legal checklist (paused with LEGAL-001).
+- `docs/adversarial/v2.1-review.md` + `v2.1-review-deep-dive.md` — findings + halts + attack scenarios.
+- `docs/security/threat-model.md` — STRIDE + mitigation backlog.
+- `docs/legal/COMPLIANCE_GATE.md` — milestone-gated legal checklist.
 - `docs/alternatives/no-token-spec.md` — parallel-track spec.
+- `docs/architecture/v2-architecture.md` — high-level architecture + dispute phased plan.
 - `docs/architecture/escrow-state-machine.md` — CONTRACT-002 design.
 - `docs/architecture/slashing-spec.md` — DRAFT; halt remains in force.
 - `docs/architecture/mobile-platform-risks.md` — iOS/Android runbooks.
-- `docs/sprint-0/README.md` — sprint-0 deliverable index.
+- `docs/dispute-resolution-system.md` + `docs/dispute-simulations.md` + `docs/dispute-gamification-risks.md` + `docs/dispute-ui-spec.md` — dispute spec.
+- `docs/las-vegas-backlog.md` + `docs/las-vegas-technical-specs.md` — LV pilot.
+- `docs/sprint-0/README.md` + `docs/sprint-1-2026-05-25.md` — sprint indexes.
+- `grok_feedback.md` — canonical per-commit log.
