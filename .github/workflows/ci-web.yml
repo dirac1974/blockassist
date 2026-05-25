@@ -1,0 +1,57 @@
+name: CI - Web
+
+on:
+  push:
+    paths:
+      - 'web/**'
+      - '.github/workflows/ci-web.yml'
+  pull_request:
+    paths:
+      - 'web/**'
+      - '.github/workflows/ci-web.yml'
+
+jobs:
+  lint-and-typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for package.json + lockfile
+        id: pkg
+        run: |
+          if [ ! -f web/package.json ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::web/ has no package.json yet; skipping. Workflow auto-activates when scaffolding lands."
+          elif [ -f web/package-lock.json ] || [ -f web/yarn.lock ] || [ -f web/pnpm-lock.yaml ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::web/ has no lockfile yet; skipping install/lint/typecheck."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.pkg.outputs.ready == 'true'
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install
+        if: steps.pkg.outputs.ready == 'true'
+        working-directory: web
+        run: npm ci
+
+      - name: Lint
+        if: steps.pkg.outputs.ready == 'true'
+        working-directory: web
+        run: npm run lint --if-present
+
+      - name: Typecheck
+        if: steps.pkg.outputs.ready == 'true'
+        working-directory: web
+        run: npm run typecheck --if-present
+
+      - name: Build
+        if: steps.pkg.outputs.ready == 'true'
+        working-directory: web
+        run: npm run build --if-present
