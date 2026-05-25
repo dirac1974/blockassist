@@ -35,6 +35,9 @@ export default function ProfileScreen(): JSX.Element {
         <Link href="/tourist-onboarding" asChild>
           <Button label="Tourist Mode" variant="secondary" />
         </Link>
+        <Link href="/tipping-calculator" asChild>
+          <Button label="Tipping calculator" variant="secondary" />
+        </Link>
         <Link href="/safety" asChild>
           <Button label="Safety & buddy check-in" variant="secondary" />
         </Link>

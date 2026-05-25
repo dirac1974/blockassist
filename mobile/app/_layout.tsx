@@ -10,6 +10,7 @@ export default function RootLayout(): JSX.Element {
       <Stack.Screen name="zones" options={{ title: 'Demand zones' }} />
       <Stack.Screen name="tourist-onboarding" options={{ presentation: 'modal', title: 'Tourist Mode' }} />
       <Stack.Screen name="safety" options={{ title: 'Safety' }} />
+      <Stack.Screen name="tipping-calculator" options={{ title: 'Tipping calculator' }} />
     </Stack>
   );
 }
