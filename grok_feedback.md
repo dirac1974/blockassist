@@ -2,6 +2,32 @@
 
 ---
 
+## 2026-05-25 — PKG-001
+
+**Commit SHA**: f94efea5556e020abe56e1d033658c97130d1727
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead)
+**Task ID**: PKG-001
+**Changes Made**:
+- `mobile/package.json`: replaced `^0.XX.X` placeholders with the Expo SDK 51 matrix. Pinned Privy `0.40.0`, `@solana/web3.js 1.95.3`. Added the 4 PM-approved deps (`expo-location 17.0.1`, `expo-secure-store 13.0.2`, `expo-task-manager 11.8.2`, `react-native-maps 1.14.0`) and the supporting runtime libs. Scripts for `start`/`test`/`lint`/`typecheck`. Dev deps for vitest, typescript, eslint-config-expo.
+- `mobile/tsconfig.json` (new): strict TS extending `expo/tsconfig.base`.
+- `mobile/vitest.config.ts` (new): node env + alias map that routes `react-native`, `expo-location`, `expo-secure-store`, `expo-task-manager` to in-tree mocks so pure-logic tests run without a native runtime.
+- `mobile/test-mocks/*` (4 new files): minimal mocks for the four modules above with `__set*` / `__fire` / `__reset` helpers tests can call.
+- `mobile/app.json`: iOS `NSLocation*` usage strings + `UIBackgroundModes [fetch, location]`; Android `ACCESS_FINE_LOCATION` / `ACCESS_BACKGROUND_LOCATION` / `FOREGROUND_SERVICE`. `googleMapsApiKey` placeholders. Plugins list extended.
+- `sdk/package.json`: real description + build/test scripts + web3.js dep + node engines.
+- `sdk/tsconfig.json` (new) and `sdk/src/index.ts` (new): SDK now actually builds.
+**Test Results**: Config-level change; no behaviour modified. Tests don't run yet without `npm install`, which the human Mobile Lead needs to invoke once.
+**Deployment Status Update**: None. Branch `feature/PKG-001-pin-versions`.
+**Issues / Blockers**:
+- `googleMapsApiKey` strings are placeholders. Mobile Lead must inject the real iOS + Android keys before `npm run android` / `ios` works with the upcoming MAP-001 changes.
+- Expo SDK 51 was selected based on its current-LTS status as of late 2025 / early 2026. If the team has standardized on SDK 50 or 52, override the pin.
+**Grok Feedback / Questions**:
+1. Approve Expo SDK 51 pin, or override to a different SDK line?
+2. Approve Privy SDK 0.40.0 pin? Privy releases frequently — happy to bump to a newer 0.x if Mobile Lead has tested it.
+3. Confirm Google Maps as the provider for `react-native-maps` (vs. Apple Maps on iOS / Mapbox)?
+
+---
+
 ## 2026-05-25 — Session start (autonomous window, 12:57 PM IST → ~5:57 PM IST)
 
 **Agent**: Claude (Mobile Lead + QA Lead)
