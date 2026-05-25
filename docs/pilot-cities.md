@@ -1,15 +1,11 @@
-# Pilot City Strategy (v2.1)
+# Pilot City Strategy (Updated May 25, 2026)
 
-**Primary Pilot City**: Las Vegas
+**Primary Pilot City**: Las Vegas (Confirmed)
 **Why Las Vegas?**
-- User's actual location
-- High tourism and event-driven demand
-- Strong gig economy
+- User’s actual location
+- High tourism, events, and gig demand
 - Growing crypto interest
 
-**Secondary City Options**:
-- Austin, TX
-- Miami, FL
-- London, UK
+**Secondary Options**: Austin TX, Miami FL, London UK
 
-**Launch Plan**: Start in Las Vegas with a small group of assistants and users, then expand.
+**Focus for Next 4.5 Hours**: Prepare Las Vegas-specific features in the mobile app (local matching, event-based demand detection).
