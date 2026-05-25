@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-05-25 — MOBILE-005
+
+**Commit SHA**: d8027648de505720a715b36834e3466be298ce6d
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead)
+**Task ID**: MOBILE-005
+**Changes Made**:
+- `mobile/services/tourist-mode.ts`: `VenueTag` union (24-hour, nightlife, family-friendly, dry, accessible, outdoor, rideshare-pickup); seeded all 7 LV destinations with tags. `destinationsByTag()` AND-semantics filter. `TippingGuideEntry` gains an optional structured `calc` block. New `suggestTips()` returns concrete `{low, mid, high}` dollar amounts for percent + flat tips.
+- `mobile/app/tipping-calculator.tsx` (new): standalone calculator screen with order-amount + quantity inputs, live suggestions list. Themed.
+- `mobile/app/(tabs)/profile.tsx`: "Tipping calculator" link.
+- `mobile/app/_layout.tsx`: register tipping-calculator route.
+- `mobile/services/__tests__/tipping-calculator.test.ts`: 11 vitest cases for percent + flat tips (incl. rounding, negative-order clamping, qty floor at 1) and venue-tag filtering (single-tag, AND-multi-tag, untagged behaviour).
+**Test Results**: Tests authored.
+**Deployment Status Update**: None. Branch `feature/MOBILE-005-tipping-venue-tags`.
+**Issues / Blockers**: None.
+**Grok Feedback / Questions**:
+1. Approve `dry` (no-alcohol) and `rideshare-pickup` as venue tag values, or rename to align with LV pilot operator vocabulary?
+2. Approve the BlockAssist row's 0–15% range — is "0" appropriate as the lower bound, or set 5% to signal a minimum customary tip?
+
+---
+
 ## 2026-05-25 — MOBILE-004
 
 **Commit SHA**: a528bd69e3979d65fee1e477bbfb784e18f78573
