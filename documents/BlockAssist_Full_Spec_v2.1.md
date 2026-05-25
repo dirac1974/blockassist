@@ -2,121 +2,43 @@
 
 **Version**: 2.1 | **Date**: May 25, 2026
 
-## 1. Program Overview & Design Purpose
+## Chain Selection Rationale
 
-BlockAssist is a decentralized, cross-platform (Android + iOS) gig economy platform built on Solana. It connects users with assistants for delivery, tasks, and custom jobs using USDC escrow, collateral, and a fair dispute system.
+### Why Solana?
 
-**Core Goals**:
-- Reduce platform fees from 25-30% (Uber model) to ~6%
-- Give users and assistants real ownership via tokenomics
-- Ensure fair, decentralized dispute resolution
-- Maintain long-term token stability and sustainable growth
+We chose **Solana** as the primary blockchain for BlockAssist after careful evaluation of multiple chains (including Polygon, Base, Arbitrum, and Sui).
 
-## 2. Architecture Components
+**Key Reasons**:
 
-### 2.1 Smart Contracts (Anchor Programs)
-- **Registry**: User/assistant profiles + reputation
-- **Escrow**: USDC payment locking and release
-- **Collateral**: USDC staking for assistants
-- **Marketplace**: Fast orders + custom job bidding
-- **Dispute**: Full decentralized resolution system (detailed below)
-- **Reputation**: Soulbound scoring + outcome voting
-- **Governance**: veASSIST voting + parameter changes
+1. **Performance & Throughput**
+   - Solana offers significantly higher real-world TPS (2,000–5,000+) compared to Polygon (~100–300).
+   - Sub-second finality (400ms blocks, improving to ~150ms with Alpenglow).
+   - Critical for a high-volume consumer app with frequent small transactions (orders, bids, ratings, disputes).
 
-### 2.2 Mobile App (React Native + Expo)
-- Cross-platform (Android 8.0+ / iOS 14+)
-- Privy wallet integration
-- Las Vegas-specific features (Event Matching, Hot Zones, Tourist Mode, Night Mode)
+2. **Extremely Low Fees**
+   - Transaction costs are typically under $0.001 (often ~$0.00025).
+   - This is essential for achieving our target of ~6% platform fees (vs Uber's 25–30%).
+   - Polygon fees would have made the low-fee model much harder to sustain at scale.
 
-### 2.3 Tokenomics ($ASSIST)
-- **Primary Model**: Hybrid veASSIST + Usage Airdrop + Revenue Share
-- **Yield**: Variable (tied to actual platform revenue)
-- **20% Growth Treasury**: Vested over 24 months for marketing/investors
-- **Deflation**: Buyback & burn from dispute bonds + fees
-- **Stability**: Treasury reserve + controlled distribution
+3. **Consumer App Ecosystem (2026)**
+   - By mid-2026, Solana has become the leading chain for high-volume consumer applications (DePIN, social, gaming, payments).
+   - Excellent tooling (Anchor, Helius, Solana Mobile Stack).
+   - Strong mobile and real-world adoption.
 
-## 3. Dispute Resolution System (Full Details)
+4. **Cost Efficiency for Gig Economy**
+   - A delivery/gig platform generates many micro-transactions.
+   - Solana's low cost allows us to keep fees low while maintaining profitability.
 
-**Core Principles**:
-- No central authority
-- No plutocracy (quadratic voting + reputation weighting)
-- Fair to both users and assistants
-- Strong anti-scam protections
+### Why Not Polygon?
 
-**Flow**:
-1. Optimistic 48-hour window (auto-release)
-2. Dispute raised + dual bonding
-3. Evidence submission (IPFS + timestamps)
-4. Jury selection (85th percentile reputation, random)
-5. Quadratic voting + resolution
-6. Penalties + possible bans
-7. Public outcome voting (1-5 stars, low weight)
+While Polygon is a strong chain with excellent EVM compatibility and a mature ecosystem, it did not meet our specific requirements:
 
-**Jury Incentives**:
-- 10% of lost bonds as rewards
-- Reputation boost
-- Fallback pool with 50% reward increase if low acceptance
+- Lower throughput and higher fees compared to Solana
+- Less optimal for high-frequency consumer use cases
+- Better suited for DeFi or enterprise applications where EVM compatibility is more critical
 
-**Appeals**: Available for disputes > $150 with 2x bond
+### Future-Proofing
 
-**Public Viewer**: Anyone can view disputes (Open Courtroom) with outcome quality voting
+Although Solana is our primary chain, the mobile app architecture (React Native + Expo) is largely chain-agnostic. We have designed the system to allow future expansion to other chains (via Wormhole or similar bridges) if needed.
 
-## 4. Tokenomics Deep Dive
-
-**Fee Split (6% Total)**:
-- Ops: 1.2%
-- Insurance: 1.8%
-- Growth Treasury (20%): 1.2%
-- veASSIST Stakers: 1.2%
-- Usage Airdrop: 0.6%
-
-**Yield Calculation**:
-Yield = (Platform Revenue × 40%) / Total veASSIST Supply
-
-**Inflation/Deflation**:
-- Deflation: 15% of lost bonds + 20% of fees → Buyback & Burn
-- Inflation: Controlled usage airdrops
-- Stability: Treasury reserve for price support
-
-**Issuing More Tokens**:
-- Only through governance vote
-- Max annual inflation cap: 8%
-- Requires 2/3 veASSIST majority + 30-day timelock
-
-## 5. Governance Rules
-
-- veASSIST holders vote on:
-  - Fee changes
-  - New feature priorities
-  - Treasury spending
-  - Token inflation proposals
-  - Dispute system parameter changes
-- Quadratic voting applied
-- 30-day timelock on major changes
-
-## 6. Growth Potential & Projections
-
-**Conservative Path** (Year 1-2):
-- 5,000 monthly active users in Las Vegas
-- $80k monthly fees
-- Token price stable with gradual growth
-
-**Optimistic Path** (Year 3-5):
-- Expansion to 5+ cities
-- 50,000+ MAU
-- $1M+ monthly fees
-- Strong deflation + demand = significant token appreciation
-
-**Risk Scenarios**:
-- High dispute volume: More buybacks but potential user churn
-- Low adoption: Treasury used for aggressive marketing
-- Regulatory issues: Legal deferral allows time to adapt
-
-## 7. Behavior Mitigation
-
-- **Scammers**: Heavy collateral slashing + bans
-- **Whales**: Quadratic voting + reputation weighting
-- **Customer Bias**: Low weight (10%) on outcome voting
-- **Jury Collusion**: Random selection + reputation decay
-
-This system is designed for sustainable, fair, long-term growth with strong protections against abuse.
+**Final Decision**: Solana provides the best combination of speed, cost, and consumer ecosystem fit for BlockAssist's goals.
