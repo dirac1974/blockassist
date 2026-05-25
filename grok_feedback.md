@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-05-25 — Session start (autonomous window, 12:57 PM IST → ~5:57 PM IST)
+
+**Agent**: Claude (Mobile Lead + QA Lead)
+**Files read**: `docs/claude.md`, `CLAUDE_START_PROMPT.md`, `NEXT_SESSION_TASKS.md`, `grok_feedback.md`, `mobile/package.json`, `sdk/package.json`, current main HEAD `461ae9b`.
+**Ratified decisions absorbed**:
+- `COMPOUND_SURGE_CAP = 2.8×` (was 3.5×); will update `assistant-matching.ts` + tests under CAP-001.
+- 4 dependencies approved: `expo-location`, `expo-secure-store`, `expo-task-manager`, `react-native-maps`.
+- Tipping range 0–15% (no code change needed).
+- Category weights approved; will document rationale in code.
+
+**Plan (sequenced)**: PKG-001 → CAP-001 → MAP-001 → LOC-001 → STORE-001 → SAFETY-001 → TEST-001b. Each is its own feature branch + PR + squash-merge.
+
+**Halts maintained**: ADV-F-005 (slashing), ADV-F-006 ($ASSIST/token), ADV-F-007 (insurance pool) — untouched.
+
+---
+
 ## 2026-05-25 — DOCS-003
 
 **Commit SHA**: 174e92c54726b1fa2ff1aa26a547c7e0a772aef4
