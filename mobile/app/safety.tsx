@@ -1,5 +1,6 @@
-import { ScrollView, View, Text, StyleSheet, Switch, Pressable, Alert } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Switch, Pressable } from 'react-native';
 import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'expo-router';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import {
@@ -86,7 +87,9 @@ export default function SafetyScreen(): JSX.Element {
         <Text style={[styles.note, { color: theme.textMuted }]}>
           Add up to 3 trusted contacts. They're stored only on this device (via expo-secure-store) until you opt to share.
         </Text>
-        <Button label="Manage contacts" variant="secondary" onPress={() => Alert.alert('Add-contact UI coming next', 'Storage layer is live (mobile/lib/secure-store.ts). UI to add/edit lands in a follow-up PR.')} />
+        <Link href="/safety-contacts" asChild>
+          <Button label="Manage contacts" variant="secondary" />
+        </Link>
       </Card>
 
       <Card title="Late-night venues">
