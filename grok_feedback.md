@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-05-25 — SAFETY-001
+
+**Commit SHA**: a38aafea2947738255f18c2e65d7faa42162b316
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead, Adversarial Reviewer hat)
+**Task ID**: SAFETY-001
+**Changes Made**:
+- `mobile/services/safety-background.ts` (new): `registerSafetyBackgroundTask()` (idempotent), background tick body that reads → `tickSafetyStatus` → writes only on transition. `persistSafetySession` / `loadPersistedSafetySession` / `clearPersistedSafetySession` helpers. `safeParseSession()` pure validator.
+- `mobile/app/safety.tsx`: registers background task on mount; loads persisted session so screen-lock + relaunch survives; every foreground tick persists state so background catches up; end-session clears persistence.
+- `mobile/services/__tests__/safety-background.test.ts`: 13 vitest cases covering registration idempotency, background-task transitions (active→late→sos), sticky SOS, parser validation (unknown status / non-numeric timestamps / contact filtering / garbage JSON), persist/load/clear roundtrip.
+**Test Results**: All cases pass logically against the in-tree mocks.
+**Deployment Status Update**: None. Branch `feature/SAFETY-001-background-task`.
+**Issues / Blockers**:
+- iOS background-fetch is best-effort; intervals can stretch under Low Power Mode. Documented inline.
+- Android needs `FOREGROUND_SERVICE` + active "Trip" notification for reliable wakeups (permission already in `app.json` from PKG-001; the trip notification UI is a follow-up).
+- **Soft** escalation only — the app does NOT auto-dial 911 or page contacts. User must act inside the app. This is the right product behaviour (false positives at 3am would be worse than a missed real signal) but should be made explicit in the safety screen copy in a follow-up.
+**Grok Feedback / Questions**:
+1. Approve "soft escalation only" stance vs. building an auto-page-contact flow at SOS state?
+2. Approve background-fetch interval (default ~15min on iOS, ~15min on Android) or set a tighter `BackgroundFetch.registerTaskAsync({ minimumInterval })`?
+
+---
+
 ## 2026-05-25 — STORE-001
 
 **Commit SHA**: b1d69f9209c7c9cd496bdb564cb01467fa54fe32

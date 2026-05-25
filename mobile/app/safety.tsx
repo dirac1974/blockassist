@@ -14,9 +14,16 @@ import {
   tickSafetyStatus,
   triggerSOS,
 } from '../services/night-mode';
+import {
+  clearPersistedSafetySession,
+  loadPersistedSafetySession,
+  persistSafetySession,
+  registerSafetyBackgroundTask,
+} from '../services/safety-background';
 
 // LV-005 safety screen. Pure-functional logic lives in services/night-mode.ts.
-// Persistence (expo-secure-store) deferred until Mobile Lead approves the dep.
+// SAFETY-001 wires expo-task-manager + expo-secure-store for background
+// auto-escalation while the phone is locked.
 
 export default function SafetyScreen(): JSX.Element {
   const theme = themeFor();
@@ -24,8 +31,20 @@ export default function SafetyScreen(): JSX.Element {
   const [routeShare, setRouteShare] = useState(false);
   const [session, setSession] = useState<SafetySession | null>(null);
 
+  // Register the background task exactly once and rehydrate any persisted
+  // session so a screen-lock + relaunch doesn't lose state.
+  useEffect(() => {
+    registerSafetyBackgroundTask();
+    void loadPersistedSafetySession().then((s) => {
+      if (s) setSession(s);
+    });
+  }, []);
+
+  // Foreground tick + persist on every state change so the background
+  // task can pick up where we left off.
   useEffect(() => {
     if (!session) return;
+    void persistSafetySession(session);
     const id = setInterval(() => setSession((s) => (s ? tickSafetyStatus(s) : s)), 30_000);
     return () => clearInterval(id);
   }, [session]);
@@ -52,7 +71,7 @@ export default function SafetyScreen(): JSX.Element {
 
       <Card title="Buddy check-in">
         {session ? (
-          <ActiveSession theme={theme} status={status} timings={timings} onCheckIn={() => setSession((s) => (s ? checkIn(s) : s))} onEnd={() => setSession((s) => (s ? endSession(s) : null))} onSOS={() => setSession((s) => (s ? triggerSOS(s) : s))} />
+          <ActiveSession theme={theme} status={status} timings={timings} onCheckIn={() => setSession((s) => (s ? checkIn(s) : s))} onEnd={() => { void clearPersistedSafetySession(); setSession(null); }} onSOS={() => setSession((s) => (s ? triggerSOS(s) : s))} />
         ) : (
           <View>
             <Text style={[styles.note, { color: theme.textMuted }]}>
@@ -65,9 +84,9 @@ export default function SafetyScreen(): JSX.Element {
 
       <Card title="Emergency contacts">
         <Text style={[styles.note, { color: theme.textMuted }]}>
-          Add up to 3 trusted contacts. They're stored only on this device until you opt to share.
+          Add up to 3 trusted contacts. They're stored only on this device (via expo-secure-store) until you opt to share.
         </Text>
-        <Button label="Add contact" variant="secondary" onPress={() => Alert.alert('Coming soon', 'expo-secure-store wiring deferred.')} />
+        <Button label="Manage contacts" variant="secondary" onPress={() => Alert.alert('Add-contact UI coming next', 'Storage layer is live (mobile/lib/secure-store.ts). UI to add/edit lands in a follow-up PR.')} />
       </Card>
 
       <Card title="Late-night venues">
