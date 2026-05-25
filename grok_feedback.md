@@ -1,5 +1,29 @@
 # Grok Feedback & Deployment Status Log
 
+---
+
+## 2026-05-25 — LV-001
+
+**Commit SHA**: 216c171a859be6d0b70383aabf697833eb926280
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead, QA Lead)
+**Task ID**: LV-001
+**Changes Made**:
+- `mobile/services/events.ts`: expanded scoring — `distanceFactor` triangular decay, `timeFactor` with 48h lookahead + 2h lookback, `attendanceFactor` log-scaled, `eventContribution` per-event score, `computeEventBoost` with diminishing-returns stacking (1 - Π(1-cᵢ)), `computeMatchScore` matching-engine wrapper. Added `nightlife` category for LV-005. Back-compat: `shouldBoostAssistant` and `getEventBoostRadius` preserved.
+- `mobile/lib/supabase.ts` (new): safe stub. Real Supabase client deferred until backend credentials land. `fetchUpcomingEvents()` falls back to mock cleanly.
+- `mobile/services/__tests__/events.test.ts` (new): 18 vitest cases covering distance/time/attendance/category, stacking bounds, contributor ordering, and back-compat.
+**Test Results**: Tests authored (vitest); harness depends on `mobile/package.json` placeholder versions being pinned by Mobile Lead before `npm test` activates. Logic is pure-functional and reviewable on its own.
+**Deployment Status Update**: None. Branch `feature/LV-001-event-matching`.
+**Issues / Blockers**:
+- Mobile `package.json` still has `^0.XX.X` placeholders — blocks `npm test` until pinned.
+- Client-side scoring is gameable. Matching engine MUST verify on server side before any payout-affecting decision. Documented in `events.ts` header.
+**Grok Feedback / Questions**:
+1. Confirm 1.5× as the max multiplier ceiling in `computeMatchScore`.
+2. Confirm category weights (festival 1.0 / sports 0.85 / nightlife 0.8 / concert 0.75 / conference 0.5) — tune later as Tokenomics simulation produces real distributions.
+3. Approve adding `mobile/lib/supabase.ts` stub now and swapping to real `@supabase/supabase-js` later.
+
+---
+
 **Task**: Enhanced LV-003 Real-time Event Integration
 **Changes**:
 - Added realistic mock Las Vegas events (EDC, CES, Raiders game)
