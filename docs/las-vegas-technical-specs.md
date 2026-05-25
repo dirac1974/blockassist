@@ -111,16 +111,28 @@ Each section now reflects **what is implemented today** vs. **what is still defe
 
 ## Cross-cutting
 
-**Compound surge bound**: zone × (1 + 0.5 × eventBoost) × nightFactor. Integration test asserts it stays under 3.5× at the worst-case spot (Allegiant during a Raiders night game). If Tokenomics calibration says we should cap this hard, the cap lives in the matching-engine wrapper, not in any individual factor.
+**Compound surge bound**: zone × (1 + 0.5 × eventBoost) × nightFactor, hard-capped at **2.8×** (PM-ratified 2026-05-25 12:57 IST). The cap lives in the matching-engine wrapper, not in any individual factor.
 
-**Open questions for PM** (from the autonomous session):
-1. Confirm category weights (LV-001) — current placeholders.
-2. Approve `react-native-maps` dependency (LV-002).
-3. Confirm EN/ES/ZH as the LV pilot language set (LV-004).
-4. Approve `expo-secure-store` dependency (LV-004 + LV-005 persistence).
-5. Decide auto-dark vs. OS-preference for night theme (LV-005).
-6. Compound-surge cap (3.5× implicit; or hard cap in code?).
-7. Background safety timer (Expo TaskManager) — schedule or defer?
+Why 2.8 specifically: the raw product can reach ≈3.36× at the worst-case spot (Allegiant 1.6 × event 1.5 × night 1.4 during a Raiders night game). 3.4× pricing during a major event invites press scrutiny — 2.8× leaves headroom for the engine's own ranking lift without surprising users. The cap binds rarely; in the common case (one factor at peak, others ~1.0) it is a no-op.
+
+**Category weight rationale (LV-001 events)**: festival 1.0 / sports 0.85 / nightlife 0.8 / concert 0.75 / conference 0.5. Rationale:
+- *Festival* weighted highest — multi-day events generate the most cross-task demand (food, transit, errands).
+- *Sports* + *nightlife* mid-high — concentrated high-intensity demand around game time / late hours.
+- *Concert* lower than sports — shorter window, more confined audience.
+- *Conference* lowest — attendees are in scheduled sessions; order surface is narrower (lunch + transport mostly).
+
+These are placeholders until Tokenomics simulates against pilot data; the structure (weights expressed as a single `CATEGORY_WEIGHT` table in `events.ts`) makes calibration a one-line PR.
+
+**Open questions for PM** (remaining):
+1. Confirm EN/ES/ZH as the LV pilot language set (LV-004).
+2. Decide auto-dark vs. OS-preference for night theme (LV-005).
+3. Google Maps vs. Apple Maps / Mapbox provider for `react-native-maps`.
+
+**Resolved this session** (2026-05-25 12:57 IST):
+- ✅ Compound surge cap: 2.8× (PM-ratified).
+- ✅ Category weights: approved with rationale documented.
+- ✅ Dependencies approved: `expo-location`, `expo-secure-store`, `expo-task-manager`, `react-native-maps`.
+- ✅ Tipping range 0–15% confirmed.
 
 **Persisted halts** (untouched this session):
 - ADV-F-005 Collateral slashing: `slash()` still returns `SlashHalted`.

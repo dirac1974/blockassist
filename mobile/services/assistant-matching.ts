@@ -15,10 +15,39 @@ import { Event, computeEventBoost } from './events';
 import { zoneDemandMultiplier } from './hot-zones';
 import { nightlifeBoostFor } from './night-mode';
 
-/** Hard upper bound on the combined surge multiplier. Tokenomics owns this number. */
-export const COMPOUND_SURGE_CAP = 3.5;
+/**
+ * Hard upper bound on the combined surge multiplier. Tokenomics owns this number.
+ *
+ * Ratified value: **2.8×** (PM directive 2026-05-25 12:57 IST).
+ *
+ * Rationale: the three contributing factors compound:
+ *
+ *   zone (1.0 – 1.6) × event factor (1.0 – 1.5) × night (1.0 – 1.4) ≤ 3.36
+ *
+ * The unrestricted upper bound (≈3.36) was uncomfortable for a consumer
+ * product — pricing 3.4× a baseline ride during a Raiders night game
+ * invites press scrutiny and complaints. The 2.8× cap leaves headroom for
+ * the matching engine to apply its own ranking lift without surprise.
+ *
+ * The cap binds rarely (only when *all three* factors are near their max).
+ * In the common case (zone surge with no event, or event boost during the
+ * day) the cap is a no-op. Tests under `__tests__/assistant-matching.test.ts`
+ * pin the cap and assert it is applied only when raw surge exceeds it.
+ */
+export const COMPOUND_SURGE_CAP = 2.8;
 
-/** Default weight applied to the event-boost score when composing the multiplier. */
+/**
+ * Default weight applied to the event-boost score when composing the multiplier.
+ *
+ * With the LV-001 boost score in [0, 1], the event factor lives in [1, 1.5]
+ * via `1 + 0.5 × boost`. We chose 0.5 (rather than letting boost compose
+ * raw) because:
+ *   - LV-001 multi-event stacking already produces a bounded [0, 1] value
+ *     via `1 - Π(1 - cᵢ)` — adding a separate cap inside the wrapper would
+ *     double-cap and confuse the math.
+ *   - 0.5 gives a clean +50% ceiling on the event contribution, which
+ *     matches what users intuitively expect from "event nearby".
+ */
 export const DEFAULT_EVENT_BOOST_WEIGHT = 0.5;
 
 export interface MatchingContext {

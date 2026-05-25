@@ -51,7 +51,10 @@ describe('compound surge', () => {
     expect(evt.score).toBeGreaterThan(0);
     expect(night).toBeGreaterThan(1);
     expect(combined).toBeGreaterThan(zone);
-    // Sanity cap: combined surge should not absurdly exceed 3.5×.
+    // Raw (uncapped) integration product. The matching engine wrapper caps
+    // this at COMPOUND_SURGE_CAP (2.8×); see assistant-matching.test.ts.
+    // Here we just sanity-bound the raw math at <3.5 to catch regressions
+    // in any of the three contributing factors.
     expect(combined).toBeLessThan(3.5);
   });
 
