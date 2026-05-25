@@ -2,6 +2,31 @@
 
 ---
 
+## 2026-05-25 — LV-005
+
+**Commit SHA**: fd6d4d5279166643a9e64364dd276bf039d78f09
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead, Adversarial Reviewer hat for safety design)
+**Task ID**: LV-005
+**Changes Made**:
+- `mobile/services/night-mode.ts`: `isNightTime` (cross-midnight window 22:00–05:00), `nightlifeBoostFor` (1.4× during night), `LIGHT_THEME`/`DARK_THEME`/`themeFor`, safety state machine (`startSession`/`checkIn`/`endSession`/`triggerSOS`/`tickSafetyStatus`/`safetyTimings`). State transitions: active → late after 20m without check-in → SOS after +10m. SOS is sticky.
+- `mobile/app/safety.tsx`: route-share toggle, buddy check-in card (timer + status pill), emergency contacts placeholder, late-night-venues note. Theme flips automatically at night.
+- `mobile/app/(tabs)/profile.tsx`: Safety re-entry button next to Tourist Mode.
+- `mobile/app/_layout.tsx`: register `/safety` route.
+- `mobile/services/__tests__/night-mode.test.ts`: 15 vitest cases including night-window boundaries, theme switch, full state-machine traversal, countdown clamping, sticky SOS, inactive no-op.
+**Test Results**: Pure-function tests authored.
+**Deployment Status Update**: None. Branch `feature/LV-005-night-mode`.
+**Issues / Blockers**:
+- Emergency contacts persistence (`expo-secure-store`) deferred.
+- Route-sharing requires a backend push channel — current toggle is local UI state only. Real route-share needs an authenticated session + transport (likely Solana program PDA storing an opt-in flag + an off-chain relay).
+- Safety auto-escalation runs only while app is foregrounded (no background tasks). Document a follow-up to use Expo TaskManager + background fetch.
+**Grok Feedback / Questions**:
+1. Approve 20-minute check-in interval + 10-minute SOS escalation (current default)?
+2. Approve 1.4× nightlife multiplier vs. LV-001's 1.5× event cap vs. LV-002 1.6× Allegiant — peak compound surge could approach 3.4× during a Raiders night game. Acceptable, or cap?
+3. Approve dark-mode auto-switch at 22:00 (vs. respecting OS dark-mode preference instead)?
+
+---
+
 ## 2026-05-25 — LV-004
 
 **Commit SHA**: 9fe9440adbf43efa380b761040d54d460ec7805b
