@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-05-25 — MOBILE-004
+
+**Commit SHA**: a528bd69e3979d65fee1e477bbfb784e18f78573
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead, Adversarial Reviewer)
+**Task ID**: MOBILE-004
+**Changes Made**:
+- `mobile/services/assistant-matching.ts` (new): unified surge composition behind `computeAssistantMatching` returning `{ effectiveSurge, rawSurge, capped, components }`. `MatchingEngine` interface as the contract for the future server-side engine. `ClientMatchingEngine` const implementation. Hard `COMPOUND_SURGE_CAP = 3.5`. Default event-boost weight 0.5. Header comment makes the gameability boundary explicit.
+- `mobile/app/marketplace.tsx`: switched to the unified service; surfaces "capped" state in the surge label.
+- `mobile/services/__tests__/assistant-matching.test.ts`: 9 vitest cases covering neutrality, full compound under cap, hard-cap enforcement, custom event-boost weight, `applyMultiplier`, engine-contract equivalence.
+**Test Results**: All cases authored.
+**Deployment Status Update**: None. Branch `feature/MOBILE-004-matching-service`.
+**Issues / Blockers**: None.
+**Grok Feedback / Questions**:
+1. Approve `COMPOUND_SURGE_CAP = 3.5` as the production ceiling, or set lower (e.g. 2.5×) to leave headroom for future multipliers?
+2. Confirm the future server-side matching engine will `implements MatchingEngine` — keeps client+server math reviewable side-by-side.
+
+---
+
 ## 2026-05-25 — MOBILE-003
 
 **Commit SHA**: 69d82aa53bae1a8b88886f8cdcdba5c56605901d
