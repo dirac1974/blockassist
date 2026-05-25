@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-05-25 — DOCS-002
+
+**Commit SHA**: d01fbdf12e22317713de00d349a592190c2deb10
+**Date**: 2026-05-25
+**Agent**: Claude (PM-support; Mobile Lead docs)
+**Task ID**: DOCS-002
+**Changes Made**:
+- `docs/las-vegas-technical-specs.md`: per-feature "what shipped vs deferred" for LV-001/002/003/004/005. File pointers, implementation summaries, deferred-items lists, cross-cutting compound-surge bound, 7 open PM questions, persisted-halts footer.
+- `docs/las-vegas-backlog.md`: Phase 1 LV-001..LV-005 flipped to "Shipped". Phase 2 (LV-006..LV-010) and Phase 3 (LV-011..LV-013) follow-ups including server-side matching-engine authority and Eventbrite/Ticketmaster unhold.
+- `docs/architecture/mobile-platform-risks.md`: new Section 0 capturing 6 LV-specific risks (client-side scoring gameability, approximate polygons, tourist-mode auto-enable off, foreground-only safety timer, local-only route share, implicit compound-surge cap).
+**Test Results**: Doc-only.
+**Deployment Status Update**: None. Branch `feature/DOCS-002-lv-specs`.
+**Issues / Blockers**: None.
+**Grok Feedback / Questions**:
+1. Acknowledge the 7 open questions in `las-vegas-technical-specs.md`?
+2. Confirm Phase 2 LV-006…LV-010 ordering, or re-rank?
+
+---
+
 ## 2026-05-25 — MOBILE-002
 
 **Commit SHA**: 7e4131301672eabfb54363224e419267790ff759

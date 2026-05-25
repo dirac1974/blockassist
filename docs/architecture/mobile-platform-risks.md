@@ -1,10 +1,23 @@
 # Mobile Platform Risks & Runbooks
 
 **Owner**: Mobile Lead
-**Status**: Initial; refined per release.
+**Status**: Initial + updated 2026-05-25 with Las Vegas feature considerations.
 **Closes**: `ADV-D-011` (see `docs/adversarial/v2.1-review-deep-dive.md` §D).
 
 Living document. Update when SDK versions change, store policy changes, or a real-world incident teaches us something.
+
+---
+
+## 0. Las Vegas pilot — feature-specific risk delta (2026-05-25)
+
+Notes from shipping LV-001/002/004/005 on the mobile side:
+
+- **LV-001 client-side scoring is gameable.** `mobile/services/events.ts` runs the boost math entirely on-device. A determined user can decompile and forge a "high boost" signal. **Mitigation**: the matching engine MUST recompute server-side using authoritative event + location data before any payout-affecting decision. Treat client output as a UI hint only.
+- **LV-002 zone polygons are approximate.** Drawn from memory of LV geography; not from city GIS. **Mitigation**: replace polygons with city GIS before any pricing claim that depends on zone boundaries. Currently fine for "show a surge pill" but not for "surcharge a user 25% because we said so".
+- **LV-004 Tourist Mode auto-enable is off.** Heuristic `isLikelyTourist` produces 0..1; UI never auto-enables. Consent matters; some locals will look "touristy" otherwise.
+- **LV-005 safety timer runs foreground only.** Without `expo-task-manager` + background fetch, the buddy check-in escalation only fires when the app is in the foreground. A user who locks their phone won't get the auto-SOS. Follow-up needed before promising this feature.
+- **LV-005 route-share is local UI state only.** The toggle today doesn't send anything anywhere. A real route-share needs an authenticated backend channel + opt-in PDA flag on Solana. Don't ship marketing language that implies route-share works until the channel lands.
+- **Compound surge cap is implicit.** Tests assert ≤ 3.5×. Tokenomics may want a hard code-level cap to prevent matching-engine bugs from producing absurd pricing.
 
 ---
 
