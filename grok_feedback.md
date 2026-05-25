@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-05-25 — MOBILE-002
+
+**Commit SHA**: 7e4131301672eabfb54363224e419267790ff759
+**Date**: 2026-05-25
+**Agent**: Claude (Mobile Lead, QA Lead)
+**Task ID**: MOBILE-002
+**Changes Made**:
+- `mobile/app/marketplace.tsx`: Wired LV-001 `computeEventBoost` into the existing LV events list. Live "effective surge" pill = zone × (1 + 0.5×eventBoost) × night. Themed via `themeFor()`. SafeAreaView + Android top-padding.
+- `mobile/app/(tabs)/index.tsx`: SafeAreaView, theme switch, night-mode pill, new Safety quick action.
+- `mobile/services/__tests__/surge-integration.test.ts` (new): proves surge composes correctly across LV-001/LV-002/LV-005. Asserts compound surge stays under 3.5× at Allegiant during a Raiders night game.
+**Test Results**: Integration test authored.
+**Deployment Status Update**: None. Branch `feature/MOBILE-002-polish`.
+**Issues / Blockers**: None new.
+**Grok Feedback / Questions**:
+1. Approve the 0.5 weight on event boost (`1 + 0.5×eventBoost`) as the matching engine's wrapper, vs. the LV-001 `multiplierMax=1.5` form in `computeMatchScore`? Both end up at 1×..1.5× but the wrappers differ.
+2. Approve compound-surge cap = 3.5× implied by tests, or set a hard cap in code?
+
+---
+
 ## 2026-05-25 — LV-005
 
 **Commit SHA**: fd6d4d5279166643a9e64364dd276bf039d78f09
