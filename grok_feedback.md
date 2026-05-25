@@ -15,6 +15,132 @@
 
 ---
 
+---
+
+## 2026-05-25 — DOCS-001
+
+**Commit SHA**: 9b730989cdf49db721ce1e30fdaeb8b17a1cf235
+**Date**: 2026-05-25
+**Agent**: Claude (Project Manager support)
+**Task ID**: DOCS-001
+**Changes Made**: Added `docs/templates/` with decision-record, adversarial-finding, threat-model-entry, and grok-feedback-entry templates. Added `docs/README.md` as topic index + reading order + conventions.
+**Test Results**: No code. Doc-only commit.
+**Deployment Status Update**: None. Branch `feature/DOCS-001-templates`.
+**Issues / Blockers**: None.
+**Grok Feedback / Questions**:
+1. Confirm the `grok_feedback.md` entry template matches what you want going forward — should "Grok Feedback / Questions" be renamed to "PM Feedback / Questions" so it stays accurate if PM changes?
+
+---
+
+## 2026-05-25 — ADV-001
+
+**Commit SHA**: 363449938c14cce9a120351d2e336120445a7b04
+**Date**: 2026-05-25
+**Agent**: Claude (Adversarial Reviewer)
+**Task ID**: ADV-001
+**Changes Made**: Authored `docs/adversarial/v2.1-review.md`. 16 findings (3 Critical, 6 High, 5 Medium, 2 Low/Info), 7 steel-manned decision challenges, 10 open questions, 3 explicit halt items (collateral, token launch, insurance pool). Logged in `docs/decisions/DECISIONS.md`.
+**Test Results**: No code changed. Doc-only commit.
+**Deployment Status Update**: None. Feature branch `feature/ADV-001-architecture-review` only.
+**Issues / Blockers**: ADV-F-005, F-006, F-007 are HALT items and block Collateral, Token Launch, and Insurance Pool workstreams respectively. PM + Legal Lead need to acknowledge.
+**Grok Feedback / Questions**:
+1. Do you (PM) ratify the 3 halt items, or contest any of them in DECISIONS.md?
+2. Who is the named human Adversarial Reviewer? (ADV-F-013)
+3. Calendar date for token-vs-no-token commit? (Open Question #1)
+4. Candidate pilot cities + Legal applicability matrix? (Open Question #3, ADV-F-016)
+
+---
+
+## 2026-05-25 — ADV-001-v2
+
+**Commit SHA**: 3552713f7798a4fa091f9f433c8bf81d14093d45
+**Date**: 2026-05-25
+**Agent**: Claude (Adversarial Reviewer)
+**Task ID**: ADV-001-v2
+**Changes Made**: Authored `docs/adversarial/v2.1-review-deep-dive.md` — companion to base review. 10 attack scenarios (§A), dispute-landscape verdict + 3-phase plan (§B), timeline analysis with named scenarios (§C), cross-platform mobile risks (§D), 11 ADV-D-NNN follow-up items (§E).
+**Test Results**: Doc-only.
+**Deployment Status Update**: None. Branch `feature/ADV-001-v2-deep-dive`.
+**Issues / Blockers**: §C timeline analysis shows 12mo target requires LEGAL-001 lift within 2 weeks. The current deferral makes 12mo unrealistic; recommend updating `PROJECT_STATUS.md` to a 14–20mo range.
+**Grok Feedback / Questions**:
+1. Ratify the dispute-system 3-phase plan (mediator → VRF jury → appellate), or contest in DECISIONS.md?
+2. Update PROJECT_STATUS.md timeline to 14–20mo range? (Recommended.)
+3. Pilot cities — keep non-US to avoid MTL critical path (§C)?
+
+---
+
+## 2026-05-25 — SEC-001
+
+**Commit SHA**: 2fba9789c3dba2e2fabe8fddda5d9f41c2869e4a
+**Date**: 2026-05-25
+**Agent**: Claude (Security Lead)
+**Task ID**: SEC-001
+**Changes Made**: Authored `docs/security/threat-model.md`. 12 assets, 6 trust boundaries, STRIDE per 9 components, 10 cross-cutting threats, 15-item prioritized mitigation backlog, 10 open questions. Cross-links ADV-001 halts.
+**Test Results**: No code changed. Doc-only commit.
+**Deployment Status Update**: None. Feature branch `feature/SEC-001-threat-model` only.
+**Issues / Blockers**: Several STRIDE rows are aspirational pending design decisions from ADV-F-003 (escrow FSM) and ADV-F-004 (dispute jury). Threat model must be re-reviewed when those land.
+**Grok Feedback / Questions**:
+1. Audit-firm shortlist + budget — when do we lock?
+2. Bug bounty platform decision (Immunefi vs. self-hosted)?
+3. KYC vendor selection — affects A6 (PII) breach surface?
+4. VRF provider for jury selection (Switchboard or other)?
+
+---
+
+## 2026-05-25 — COMPLIANCE-001
+
+**Commit SHA**: 3f30d28616b378a12b41b2ddf5caadccb1cd4923
+**Date**: 2026-05-25
+**Agent**: Claude (acting Legal & Compliance Lead — drafting only; counsel sign-off required)
+**Task ID**: COMPLIANCE-001
+**Changes Made**: Expanded `docs/legal/COMPLIANCE_GATE.md` from 6 bullets to a full milestone-gated checklist with 10 sections (securities, MTL/payments, KYC/AML/sanctions, gig classification, consumer protection, data protection, insurance, contract/token mechanics, per-city ops, token pre-launch). Added milestone tags (P0, DEVNET, PILOT, MN, TOK, CITY-N). Added sign-off block format.
+**Test Results**: No code changed.
+**Deployment Status Update**: None. Feature branch `feature/COMPLIANCE-001-gate-checklist`.
+**Issues / Blockers**: Several items can only be moved off `[ ]` by retained outside counsel — protocol cannot self-attest.
+**Grok Feedback / Questions**:
+1. Are we engaging crypto-specialist counsel by which date? (LEGAL-001)
+2. Confirm candidate pilot cities for §9 City Op Briefs.
+3. Confirm token-launch criteria — do we add a "30 days mainnet stability" precondition in §10 or shorter?
+
+---
+
+## 2026-05-25 — LEGAL-003
+
+**Commit SHA**: 4679978b3b626335ce56fadb00081e6a0209e98b
+**Date**: 2026-05-25
+**Agent**: Claude (acting Tokenomics Engineer + Legal Lead — drafting only)
+**Task ID**: LEGAL-003
+**Changes Made**: Expanded `docs/alternatives/no-token-spec.md` from 13 lines to a full parallel-track spec: architecture delta, 4.5% fee model, foundation governance, launch path comparison (no-token ships 2–4mo earlier), shared KPI list, end-of-Phase-0 decision criteria, reversibility analysis. Added Howey/Reves note + cross-reference to `docs/tokenomics/model.md`.
+**Test Results**: No code changed.
+**Deployment Status Update**: None. Feature branch `feature/LEGAL-003-no-token-spec`.
+**Issues / Blockers**: Decision date (end of Phase 0) is contingent on LEGAL-002 securities opinion being delivered. If LEGAL-002 slips, this decision also slips.
+**Grok Feedback / Questions**:
+1. Foundation jurisdiction preference (Switzerland Verein / Cayman / US non-profit)?
+2. Acceptable fee headline for no-token track — is 4.5% the right number, or would 5% with deeper insurance reserve be better?
+3. Confirm that Reputation Bonus Pool framing (work-based, not capital-based) lands with counsel.
+
+---
+
+## 2026-05-25 — CONTRACT-001
+
+**Commit SHA**: 77072044f835105a56ebb4d9d4296ded7137f26a
+**Date**: 2026-05-25
+**Agent**: Claude (Security Lead support, QA Lead support)
+**Task ID**: CONTRACT-001
+**Changes Made**:
+- Added `.github/workflows/ci-mobile.yml`, `ci-web.yml`, `ci-sdk.yml` — lint/typecheck/build/test, each gated on lockfile presence so workflows pass today and auto-activate when real lockfiles are committed.
+- Added `.github/workflows/security-scan.yml` — gitleaks on every push/PR + weekly cron; cargo audit gated on Cargo.lock; npm audit matrix gated on each per-directory lockfile.
+- Added `.github/workflows/repo-hygiene.yml` — required-files check that tolerates the CLAUDE.md transitional state; informational intra-repo markdown link check (warnings only).
+**Test Results**: Workflows pass syntactic validation (YAML). Functional CI run requires push to GitHub. No local tests touched.
+**Deployment Status Update**: None. Branch `feature/CONTRACT-001-ci-hardening`.
+**Issues / Blockers**:
+- ADV-F-014 (`Anchor.toml` missing 4 of 5 programs + placeholder program ID `Fg6Pa…sLnS`) is deferred to Lead Smart Contract Engineer because real program IDs require `solana-keygen new` and a deploy-keypair file. Out of CONTRACT-001 scope as designed.
+- Existing `ci-contracts.yml` still uses unmaintained `actions-rs/toolchain@v1`; not touched to keep PR scope tight. Suggest follow-up CONTRACT-002.
+**Grok Feedback / Questions**:
+1. Should CI workflows be marked as **required** in branch protection (per `BRANCH_PROTECTION.md`)? If yes, do that AFTER they have passed at least one successful run.
+2. Confirm gitleaks license / cost for private-repo case (action is free for public repos; private requires license). Repo is currently public, so fine.
+3. Should npm-audit threshold be `high` (current) or `moderate`?
+
+---
+
 ## 2026-05-25 — MOBILE-001
 
 **Commit SHA**: c6982096c8f320c8689bcb7c4442d8a75189b0ad
@@ -36,6 +162,92 @@
 
 
 ---
+
+---
+
+---
+
+## 2026-05-25 — CONTRACT-002
+
+**Commit SHA**: c68d458a4a510756f980e35c6ed111309ef893d2
+**Date**: 2026-05-25
+**Agent**: Claude (Lead Smart Contract Engineer)
+**Task ID**: CONTRACT-002
+**Changes Made**: Closed ADV-F-003 by drafting `docs/architecture/escrow-state-machine.md` (8 states, transition table, time params, account layout, events, errors, adversarial mapping). Implemented `contracts/programs/escrow/src/lib.rs`: init_escrow, fund_escrow, accept_listing, mark_delivered, accept_delivery, finalize_optimistic (cranker-callable), dispute_delivery, cancel_pre_fund. USDC SPL CPI with PDA signer seeds; per-order vault ATA; affirmative-accept threshold enforced.
+**Test Results**: No Anchor build run locally (anchor CLI not in env). CI ci-contracts.yml will exercise `anchor build && anchor test` on push; expect a *build error from the System-Program-ID placeholder*. Tests for happy paths will land in TEST-001.
+**Deployment Status Update**: None. Branch `feature/CONTRACT-002-escrow`.
+**Issues / Blockers**:
+- declare_id placeholder must be replaced (ADV-F-014).
+- `mark_frozen` deferred; needs verified `anchor_spl::token::AccountState` comparison.
+- `cancel_pre_fund` does not close the vault ATA — small rent leak; follow-up PR.
+- `EscrowError::MissingMutualSignature` defined for forthcoming `cancel_in_progress` (mutual cancel); the instruction itself is deferred to a follow-up — needs design call.
+**Grok Feedback / Questions**:
+1. Ratify `AFFIRMATIVE_ACCEPT_THRESHOLD_USDC_BASE = $50` placeholder (ADV-D-002), or hold until Tokenomics simulation lands?
+2. Approve cancel_in_progress as mutual-only (per spec §10 default), or allow either party with cooldown?
+3. Approve fee deduction at *release* time vs. *fund* time (spec §10 open Q4)?
+
+---
+
+## 2026-05-25 — CONTRACT-003
+
+**Commit SHA**: b666c8128c9e628df07c414d3152ac0531b8b62e
+**Date**: 2026-05-25
+**Agent**: Claude (Lead Smart Contract Engineer)
+**Task ID**: CONTRACT-003
+**Changes Made**:
+- `docs/architecture/slashing-spec.md` (DRAFT — halt NOT lifted): triggers, magnitude options, destination, authority, appeal window 7d, due-process minimums for Legal review, account layout, 5 open questions.
+- `contracts/programs/marketplace/src/lib.rs`: create_listing / accept_listing / cancel_listing / expire_listing with $0.05 USDC refundable fee, per-listing fee_vault PDA-owned ATA.
+- `contracts/programs/collateral/src/lib.rs`: init_collateral / deposit / withdraw; `slash` defined but returns `SlashHalted` error to make the halt explicit and machine-checkable.
+**Test Results**: No build run locally. CI will exercise on push (expect placeholder-id build error per CONTRACT-002 notes).
+**Deployment Status Update**: None. Branch `feature/CONTRACT-003-marketplace-collateral`.
+**Issues / Blockers**:
+- Collateral per-active-order minimum balance NOT enforced. Pre-slash posture is unbounded withdraw. Acceptable while slash is halted; flip when CONTRACT-004 lands.
+- Marketplace expire-fee sweep to ops/insurance NOT implemented; forfeit funds sit in the listing PDA's fee_vault until a sweep PR.
+**Grok Feedback / Questions**:
+1. Ratify listing fee $0.05 USDC placeholder (ADV-D-007), or hold until anti-spam simulation lands?
+2. Approve listing expire forfeit (current) vs. partial refund?
+3. Approve unbounded withdraw posture while slash is halted (or block withdraws to a minimum)?
+
+---
+
+## 2026-05-25 — TEST-001
+
+**Commit SHA**: 3986f5940e08f67c80cf47969e176ab045cd7e3d
+**Date**: 2026-05-25
+**Agent**: Claude (QA Lead)
+**Task ID**: TEST-001
+**Changes Made**:
+- `contracts/tests/escrow.spec.ts`: happy path; fund-while-funded → InvalidStateTransition; finalize-before-window → WindowNotElapsed; finalize-over-threshold → OverThreshold; cancel_pre_fund closes PDA.
+- `contracts/tests/marketplace.spec.ts`: create → fee debit; accept → fee refund; double-accept → InvalidStateTransition; cancel → fee refund; expire-before-window → NotYetExpired.
+- `contracts/tests/collateral.spec.ts`: init/deposit/withdraw + non-owner-withdraw rejection + **slash always returns SlashHalted** (this is the load-bearing test that catches a future PR accidentally enabling slashing before the spec is finalized).
+- `mobile/lib/__tests__/format.test.ts`: pure-function tests for `formatUsdc`, `timeAgo`, `formatRemaining`.
+**Test Results**: Not run yet. Anchor tests require the placeholder `declare_id!` replacement before `anchor test` succeeds. Mobile vitest needs runner config (Mobile Lead's call).
+**Deployment Status Update**: None. Branch `feature/TEST-001`.
+**Issues / Blockers**: Same as CONTRACT-002 — placeholder declare_id blocks `anchor build`.
+**Grok Feedback / Questions**:
+1. Approve adding vitest + @testing-library/react-native + jest-expo to mobile/package.json (next PR)?
+2. Approve target Anchor test coverage threshold (>=95% per verification-criteria.md) — when do we instrument with `tarpaulin` / `cargo-llvm-cov`?
+3. After CONTRACT-001 PR merges, do we promote any of these workflows to `required` status checks for branch protection?
+
+---
+
+## 2026-05-25 — STATUS-001
+
+**Commit SHA**: 02fda3291049a6384e088ca3c2ab494e3e989fad
+**Date**: 2026-05-25
+**Agent**: Claude (PM-support)
+**Task ID**: STATUS-001
+**Changes Made**:
+- `docs/status/PROJECT_STATUS.md`: revised to 14–20mo range, ~15% progress, Active Halts + Active Deferrals tables, Sprint 0 status table, closure target rolled to 2026-07.
+- `docs/architecture/v2-architecture.md`: expanded from 11 lines to a real architecture doc — program status table, custody flow, dispute-system 3-phase plan, intentionally-out-of-scope section.
+- `docs/sprint-0/README.md` (new): sprint-0 deliverable index with status per task, exit criteria, recommended PR merge order with conflict guidance.
+**Test Results**: Doc-only.
+**Deployment Status Update**: None. Branch `feature/STATUS-001`.
+**Issues / Blockers**: None.
+**Grok Feedback / Questions**:
+1. Ratify the 14–20mo timeline range.
+2. Confirm Phase 0 closure target 2026-07 (revised from June).
+3. Approve sprint exit criteria (items 4–7 unblocked while LEGAL is deferred).
 
 ---
 
