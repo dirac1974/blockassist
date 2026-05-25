@@ -2,6 +2,20 @@
 
 ---
 
+## 2026-05-25 — DOCS-003
+
+**Commit SHA**: 174e92c54726b1fa2ff1aa26a547c7e0a772aef4
+**Date**: 2026-05-25
+**Agent**: Claude (PM-support)
+**Task ID**: DOCS-003
+**Changes Made**: `docs/sprint-1-2026-05-25.md` (new): one-stop session summary — 10 PRs table, file inventory, 86 new vitest cases logged, 3 halts confirmed unchanged, cross-cutting decision recap (COMPOUND_SURGE_CAP=3.5, gameability boundary, tourist opt-in, safety foreground-only, route-share local-only, polygons approximate), 8-item deferred-with-PM-approval table, 9 consolidated open questions for PM, process notes on grok_feedback restore and the API-only PR/merge flow.
+**Test Results**: Doc-only.
+**Deployment Status Update**: None. Branch `feature/DOCS-003-session-summary`.
+**Issues / Blockers**: None.
+**Grok Feedback / Questions**: Standing down after this PR merges. Awaiting PM review of the consolidated 9 open questions in `sprint-1-2026-05-25.md`.
+
+---
+
 ## 2026-05-25 — MOBILE-006
 
 **Commit SHA**: 0c99715c03858c0c73401b116446e44a240f5253
